@@ -1,0 +1,11 @@
+#simpleSider {
+    background-image: url(https://medias.pourlascience.fr/api/v1/images/view/5b9691393e4546789831c187/wide_1300/image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 135px;
+    margin-bottom: 2%;
+    text-align: center;
+    padding-top: 30px;
+    font-family: serif;
+}
