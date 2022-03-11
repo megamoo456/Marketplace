@@ -16,7 +16,8 @@ function Register({ history }) {
         phoneNumber: '',
         email: "",
         password: "",
-        repeatPassword: ""
+        repeatPassword: "",
+        role: null 
     });
 
     const handleChanges = (e) => {
@@ -81,13 +82,14 @@ function Register({ history }) {
                                 Phone Number should be a valid Maurice number.
                             </Form.Text>
                         </Form.Group>
-                      {/*   <Form.Group as={Col} controlId="formGridGender" className="col-lg-4">
+                         <Form.Group as={Col} controlId="formGridGender" className="col-lg-4">
                             <Form.Label>Role *</Form.Label>
                             <Form.Control as="select" name="role"  onChange={handleChanges} required >
-                                <option>Buyer & Seller</option>
+                                <option>Buyer</option>
+                                <option>Seller</option>
                                 <option>Transporter</option>
                             </Form.Control>
-                        </Form.Group> */}
+                        </Form.Group> 
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="formBasicEmail" className="col-lg-12">

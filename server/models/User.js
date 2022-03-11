@@ -33,11 +33,14 @@ const userSchema = new mongoose.Schema({
         trim: true,
         default: 'Not specified'
     },
-    
     avatar: {
         type: String,
         default: 'https://res.cloudinary.com/silenceiv/image/upload/q_auto:eco/v1617358367/defaultAvatar_wnoogh.png'
     },
+    role: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Roles'
+    }],
     createdSells: [
         {
             type: mongoose.Schema.Types.ObjectId,

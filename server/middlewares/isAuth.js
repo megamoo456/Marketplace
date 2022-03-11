@@ -1,11 +1,10 @@
 const User = require('mongoose').model('User');
+const roles = require("../models/Roles");
 
-/**
- * Auth Checker middleware function.
- *
- * @param {array} roles User roles to grant permision for a route
- *                      If undefined, any user with login token can access
- */
+
+
+
+
 module.exports = function (roles) {
   return (req, res, next) => {
     if (!req.user) {

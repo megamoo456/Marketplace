@@ -5,7 +5,7 @@ const { SECRET } = require('../config/config');
 const ROLES = require('../models/Roles');
 
 async function registerUser(userData) {
-    let { name, email, gender, phoneNumber , password, repeatPassword } = userData;
+    let { name, email, gender, phoneNumber ,role, password, repeatPassword } = userData;
     let errors = [];
     let checkUser = await User.findOne({ email });
     if (checkUser) errors.push('This email address is already in use; ');
@@ -15,33 +15,27 @@ async function registerUser(userData) {
     if (password.length < 8) errors.push("Password should be at least 8 characters long; " );
     if (password.length > 20) errors.push("Password should be at max 20 characters long; " );
     if (errors.length >= 1) throw {message: [errors]}
-    
-    let user = new User(userData);
-    return await user.save();
-}
-const checkRolesExisted = (req, res, next) => {
-    if (req.body.roles) {
-      for (let i = 0; i < req.body.roles.length; i++) {
-        if (!ROLES.includes(req.body.roles[i])) {
-          res.status(400).send({
-            message: 'Failed! Role does not exist = ' + req.body.roles[i],
-          });
-          return;
+    if (role) {
+      for (let i = 0; i < role.length; i++) {
+        if (ROLES.id !==  role[i]) {
+          errors.push ('Failed! Role does not exist = ' + role[i]);
         }
       }
     }
-  
-    next();
-  };
+
+    let user = new User(userData);
+    return await user.save();
+}
+
 
 async function loginUser({ email, password }) {
     let user = await User.findOne({ email });
-    if (!user) throw { message: 'Invalid email or password' };
+    if (!user) throw { message: 'Invalid email ' };
 
     let hasValidPass = await bcrypt.compare(password, user.password);
-    if (!hasValidPass) throw { message: "Invalid email or password" }
+    if (!hasValidPass) throw { message: "Invalid  password" }
 
-    let token = jwt.sign({ _id: user._id, email: user.email, phoneNumber: user.phoneNumber, createdSells: user.createdSells.length, avatar: user.avatar }, SECRET);
+    let token = jwt.sign({ _id: user._id, email: user.email, phoneNumber: user.phoneNumber, createdSells: user.createdSells.length, avatar: user.avatar , role :user.role}, SECRET);
     return token;
 }
 

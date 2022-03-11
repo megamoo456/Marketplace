@@ -9,8 +9,12 @@ async function getUserById(userId) {
     return await User.findById(userId).populate("createdSells").lean();
 }
 
+async function getUserRById(userId) {
+    return await User.findById(userId);
+}
 module.exports = {
     edit,
+    getUserRById,
     getUserById
     // userCollectionUpdate,
     // findUserById

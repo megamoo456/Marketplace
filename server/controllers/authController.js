@@ -4,10 +4,11 @@ const authService = require('../services/authService');
 // const isGuest = require('../middlewares/isGuest');
 const { SECRET, COOKIE_NAME } = require('../config/config');
 const jwt = require('jsonwebtoken');
+const Role = require('../models/Roles');
 
 router.post('/register', async (req, res) => {
     try {
-        let createdUser = await authService.registerUser(req.body);
+        let createdUser = await authService.registerUser(req.body)
         res.status(201).json({ _id: createdUser._id });
     } catch (error) {
         console.log(error)

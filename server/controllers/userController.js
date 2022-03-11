@@ -35,6 +35,19 @@ router.patch('/edit-profile/:id', async (req, res) => {
         res.status(404).json({ error: err.message });
     }
 })
+router.get('/affect/:id', async (req, res) => {
+    try {
+        let user = await userService.getUserById(req.params.id);
+        let jsonRes = {
+            _id: user._id, name: user.name, email: user.email, phoneNumber: user.phoneNumber,
+            totalSells: user.createdSells.length, avatar: user.avatar,
+            isMe: req.user._id == req.params.id
+        }
+        res.status(200).json({user: jsonRes});
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+})
 
 router.get('/getUserById/:id', async (req, res) => {
     try {

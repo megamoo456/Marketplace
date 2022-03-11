@@ -10,14 +10,18 @@ const roleSchema = new mongoose.Schema({
         required: 'Please fill the role name.'
     },
     permissions: {
-        type: String,
+      type: Object,
         enum: [Permissions.canCreateProduct ,
            Permissions.canEditProduct ,
            Permissions.canDeleteProduct,
            Permissions.canViewProduct,
            Permissions.canCreateBlog,
            Permissions.canMakeOffer,
-           Permissions.canTransporter
+           Permissions.canTransporter,
+           Permissions.canCreateRole,
+           Permissions.canEditRole,
+           Permissions.canDeleteRole,  
+           Permissions.canAffectRole  
           ] // Accept only these permissions
 
     }

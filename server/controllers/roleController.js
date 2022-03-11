@@ -7,32 +7,30 @@ const User = require('../models/User');
 const moment = require('moment');
 
 const roleService = require('../services/roleService');
+const userService = require('../services/userService');
 
-router.get('/admin/role', isAuth, async (req, res) => {
-    const { search } = req.query;
+router.get('/roles', isAuth, async (req, res) => {
     try {
-        let role;
-        if (search !== '' && search !== undefined) {
-            role = await Role.find();
-            role = role.filter(x => x.name.toLowerCase().includes(search.toLowerCase()) || x.permissions.toLowerCase().includes(search.toLowerCase()))
-            res.status(200).json({ role: role, pages: role.pages });
-        } else {
-            res.status(200).json({ role: role.docs, pages: role.pages });
+        let user = await roleService.getUserById(req.params.id);
+        let jsonRes = {
+            _id: user._id, name: user.name, email: user.email, phoneNumber: user.phoneNumber,
+            totalSells: user.createdSells.length, avatar: user.avatar,
+            isMe: req.user._id == req.params.id
         }
+        res.status(200).json({user: jsonRes});
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ error });
     }
 })
 
 
 
 
-router.post('/admin/create', async (req, res) => {
+router.post('role/create', async (req, res) => {
     let { name, permissions } = req.body;
     try {
         let errors = [];
         if (name.length < 3 || name.length > 10) errors.push('name should be at least 3 characters long and max 10 characters long; ');
-        if (description.length < 10 || description.length > 1000) errors.push('Description should be at least 10 characters long and max 1000 characters long; ');
 
         if (errors.length >= 1) throw { message: [errors] };
 
@@ -42,7 +40,7 @@ router.post('/admin/create', async (req, res) => {
         })
 
         await role.save()
-        await roleService.userCollectionUpdate(req.user._id, role);
+        //await roleService.userRoleUpdate(req.user._id, role);
 
         res.status(201).json({ roleId: role._id });
     } catch (err) {
