@@ -1,6 +1,8 @@
+const baseUrl = 'http://localhost:5000';
+
 const authProvider = {
     login: (userData) =>  {
-        const request = new Request('http://localhost:5000/auth/login', {
+        const request = new Request(`${baseUrl}/auth/login`, {
             method: 'POST',
             body: JSON.stringify(userData),
             credentials: 'include',
@@ -21,20 +23,15 @@ const authProvider = {
             });
     },
     checkAuth: () => {
-        // Required for the authentication to work
         return Promise.resolve();
     },
     getPermissions: () => {
         // Required for the authentication to work
         return Promise.resolve();
     },
-    logout: ({ history }) => {
-        fetch('/auth/logout')
-        .then(res => res.json())
-        .then(res => {
-            history.push('/')
-        })
-        .catch(err => console.log(err))        
+    logout: () => {
+        localStorage.removeItem('auth');
+        return Promise.resolve();
     }
     // ...
 };

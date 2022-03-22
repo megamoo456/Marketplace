@@ -12,14 +12,14 @@ function Footer() {
       <div className="footer-links">
         <div className="footer-link-wrapper">
           <div className="footer-link-items">
-            <h2>About Us</h2>
+           
             <Link to='#'>How it works</Link>
             <Link to='#'>Our Solution</Link>
             <Link to='#'>Career</Link>
             <Link to='#'>FAQ's</Link>
           </div>
           <div className="footer-link-items">
-            <h2>Menu</h2>
+         
             <Link to='/'>Home</Link>
             <Link to='/Categories'>Market</Link>
 
@@ -27,14 +27,14 @@ function Footer() {
           </div>
           <div className="footer-link-wrapper">
           <div className="footer-link-items">
-            <h2>Legal</h2>
+          
             <Link to='#'>Terms of Conditions</Link>
             <Link to='#'>Privacy Policy</Link>
             <Link to='#'>Cookies Policy</Link>
   
           </div>
           <div className="footer-link-items">
-            <h2>Contact US</h2>
+        
             <Link to='#'>+21654584310</Link>
             <Link to='#'>info@agrimarket.com</Link>
           </div>

@@ -8,7 +8,7 @@ const moment = require('moment');
 
 const productService = require('../services/productService');
 
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     const { page, search } = req.query;
     try {
         let products;
@@ -25,7 +25,37 @@ router.get('/', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
-})
+});
+
+ router.get('/', async (req, res) => {
+    const { page, search } = req.query;
+    try {
+        let products = [];
+        p =  await Product.find();
+        for (let i = 0; i < p.length; i++) {
+			products.push(p[i].transform());
+		}
+        // res.status(200).json(products);
+        if (search !== '' && search !== undefined) {        
+            products = products.filter(x => x.active == true)
+            products = products.filter(x => x.title.toLowerCase().includes(search.toLowerCase()) || x.city.toLowerCase().includes(search.toLowerCase()))
+            res.status(200).json(products);
+        } else {
+            products = await Product.paginate({}, { page: parseInt(page) || 1, limit: 5 });
+            products.docs = products.docs.filter(x => x.active == true)
+            products = products.docs
+            //_id to id 
+            let formattedProducts = [];
+            for (let i = 0; i < products.length; i++) {
+                formattedProducts.push(products[i].transform());
+            }
+            // ..
+            res.status(200).json(formattedProducts);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
 
 router.get('/:category', async (req, res) => {
     const { page } = req.query;

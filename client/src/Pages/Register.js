@@ -67,10 +67,10 @@ function Register({ history }) {
                         </Form.Group> */}
                         <Form.Group as={Col} controlId="formGridGender" className="col-lg-4">
                             <Form.Label>Gender</Form.Label>
-                            <Form.Control as="select" defaultValue="not specified" name="gender" onChange={handleChanges}>
-                                <option>male</option>
-                                <option>female</option>
-                                <option>not specified</option>
+                            <Form.Control as="select" defaultValue="Not specified" name="gender" onChange={handleChanges}>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Not specified</option>
                             </Form.Control>
                         </Form.Group>
                     </Form.Row>

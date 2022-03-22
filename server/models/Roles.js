@@ -22,12 +22,20 @@ const roleSchema = new mongoose.Schema({
            Permissions.canEditRole,
            Permissions.canDeleteRole,  
            Permissions.canAffectRole  
-          ] // Accept only these permissions
+          ], // Accept only these permissions
 
     }
 
 });
+roleSchema.method('transform', function() {
+  var obj = this.toObject();
 
+  //Rename fields
+  obj.id = obj._id;
+  delete obj._id;
+
+  return obj;
+});
 
 module.exports = mongoose.model('Roles', roleSchema);
 /* eslint-disable key-spacing */

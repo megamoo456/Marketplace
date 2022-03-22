@@ -67,7 +67,15 @@ userSchema.pre('save', async function (next) {
     this.password = hash;
     next();
 })
+userSchema.method('transform', function() {
+    var obj = this.toObject();
 
+    //Rename fields
+    obj.id = obj._id;
+    delete obj._id;
+
+    return obj;
+});
 
 
 module.exports = mongoose.model('User', userSchema);

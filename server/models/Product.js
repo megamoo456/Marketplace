@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
         minlength: [3, 'Title should be at least 3 characters long'],
         maxLenght: [50, "Title can't be more than 50 cahracters long"]
     },
+    
     category: {
         type: String,
         required: ['Category is required'],
@@ -63,4 +64,13 @@ const productSchema = new mongoose.Schema({
 
 productSchema.plugin(mongoosePaginate);
 
+productSchema.method('transform', function() {
+    var obj = this.toObject();
+
+    //Rename fields
+    obj.id = obj._id;
+    delete obj._id;
+
+    return obj;
+});
 module.exports = mongoose.model('Product', productSchema);
