@@ -8,9 +8,14 @@ async function edit(roleId, roleData) {
 async function getRoleById(roleId) {
     return await Role.findById(roleId);
 }
+
+async function getAllRoles() {
+    return await Role.find();
+}
 async function userRoleUpdate(userId, role) {
     return await User.updateOne({ _id: userId }, { $push: { role: role } });
 }
+
 async function createRole(data, userId) {
     let role = new Role({...data})
     await role.save();
@@ -21,7 +26,8 @@ module.exports = {
     edit,
     userRoleUpdate,
     createRole,
-    getRoleById
+    getRoleById,
+    getAllRoles
     // userCollectionUpdate,
     // findUserById
 }

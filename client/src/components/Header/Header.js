@@ -23,7 +23,7 @@ function Header() {
     useEffect(() => {
         showButton();
     }, [])
-    console.log(userData);
+    //console.log(userData);
     window.addEventListener('resize',showButton);
     return (
         <Navbar className="navbar" collapseOnSelect bg="light" variant="light">
@@ -45,7 +45,7 @@ function Header() {
                             
                             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                                 <li className='nav-item'>
-                                    <Link className="nav-links" onClick={closeMobileMenu} to="/"><i class="pi pi-fw pi-home"></i>
+                                    <Link className="nav-links" onClick={closeMobileMenu} to="/"><i className="pi pi-fw pi-home"></i>
                                          Home
                                     </Link>
                                 </li>
@@ -111,7 +111,7 @@ function Header() {
                             </div>
                             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                                 <li className='nav-item'>
-                                    <Link className="nav-links" onClick={closeMobileMenu} to="/"><i class="pi pi-fw pi-home"></i>
+                                    <Link className="nav-links" onClick={closeMobileMenu} to="/"><i className="pi pi-fw pi-home"></i>
                                          Home
                                     </Link>
                                 </li>

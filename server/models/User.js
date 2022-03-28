@@ -67,12 +67,23 @@ userSchema.pre('save', async function (next) {
     this.password = hash;
     next();
 })
+
 userSchema.method('transform', function() {
     var obj = this.toObject();
 
     //Rename fields
     obj.id = obj._id;
     delete obj._id;
+
+    return obj;
+});
+
+userSchema.method('DD', function() {
+    var obj = this.toObject();
+
+    //Rename fields
+    obj.email = obj.username;
+    delete obj.username;
 
     return obj;
 });

@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 
 async function edit(userId, userData) {
-    return await User.updateOne({ _id: userId }, { $set: { ...userData } });
+    return await  User.updateOne({ _id: userId }, { $set: { ...userData } });
 }
 
 async function getUserById(userId) {

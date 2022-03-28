@@ -21,7 +21,8 @@ const roleSchema = new mongoose.Schema({
            Permissions.canCreateRole,
            Permissions.canEditRole,
            Permissions.canDeleteRole,  
-           Permissions.canAffectRole  
+           Permissions.canAffectRole,  
+           Permissions.canEnterAdmin 
           ], // Accept only these permissions
 
     }

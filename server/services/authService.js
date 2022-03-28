@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET } = require('../config/config');
 const ROLES = require('../models/Roles');
+const roleService = require('../services/roleService')
 
 async function registerUser(userData) {
     let { name, email, gender, phoneNumber ,role, password, repeatPassword } = userData;
@@ -38,7 +39,25 @@ async function loginUser({ email, password }) {
     let token = jwt.sign({ _id: user._id, email: user.email, phoneNumber: user.phoneNumber, createdSells: user.createdSells.length, avatar: user.avatar , role :user.role}, SECRET);
     return token;
 }
+async function loginAdmin({ email, password }) {
+  let user = await User.findOne({ email });
+  if (!user) throw { message: 'Invalid email ' };
+  let hasValidPass = await bcrypt.compare(password, user.password);
+  if (!hasValidPass) throw { message: "Invalid  password" }
+  let UR = "";
+  let roles = user.role[0];
+  p = await roleService.getAllRoles();
+  for (let i = 0; i < p.length; i++) {
+    if (p[i]._id.toString() == roles) {
+      UR = p[i].name;
+    }
+  };
+  if (UR!== "Admin") throw { message: "Your Not Admin !" }
 
+
+  let token = jwt.sign({ _id: user._id, email: user.email, phoneNumber: user.phoneNumber, createdSells: user.createdSells.length, avatar: user.avatar , role :user.role}, SECRET);
+  return token;
+}
 async function getUser(id) {
     return await User.findById(id).lean()
 }
@@ -46,5 +65,6 @@ async function getUser(id) {
 module.exports = {
     registerUser,
     loginUser,
+    loginAdmin,
     getUser
 }

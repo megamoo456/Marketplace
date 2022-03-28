@@ -9,6 +9,17 @@
     margin-bottom: 3px;
 }
 
+#btnSignaler {
+    padding: 6px;
+    margin-bottom: 45px;
+    background-color: rgb(255, 83, 83);
+}
+
+#btnSignaler svg {
+    font-size: 17pt;
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
 #product-price-heading {
     display: inline;
     font-family: serif;

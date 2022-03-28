@@ -17,7 +17,10 @@ import {
   SimpleForm,
   SelectInput,
   PasswordInput,
-  TextInput,
+  useNotify,
+  useRefresh,
+  useRedirect,
+  TextInput 
 } from "react-admin";
 
 
@@ -52,6 +55,10 @@ export const UserList = (props) => {
   );
 };
 export const UserCreate = (props) => {
+  const notify = useNotify();
+  const refresh = useRefresh();
+  const redirect = useRedirect();
+
     const { data } = useQuery({
         type: 'getList',
         resource: "role",
@@ -63,8 +70,20 @@ export const UserCreate = (props) => {
       });
      
       if (!data) return null;
+    
+      const onFailure = (error) => {
+        notify(`Could not create user: ${error.message}`);
+        refresh();
+
+    };
+    const onSuccess = () => {
+      notify(`Saved`);
+      redirect('/user');
+      refresh();
+
+  };
     return (
-  <Create {...props}>
+  <Create onFailure={onFailure} onSuccess={onSuccess} {...props} >
     <SimpleForm>
   {/*   <RoleReferenceInput
                 source="role"
@@ -93,6 +112,7 @@ export const UserCreate = (props) => {
   </Create>
     );
 }
+
 export const UserEdit = (props) => {
   const { data } = useQuery({
       type: 'getList',

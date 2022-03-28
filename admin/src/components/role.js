@@ -62,7 +62,8 @@ export const RolesCreate = (props) => {
      {id: 'canCreateRole', name:    "can-create-role"},
      {id: 'canEditRole', name:      "can-edit-role"},
      {id: 'canDeleteRole', name:    "can-delete-role"},
-     {id: 'canAffectRole', name:    "can-affect-role"}
+     {id: 'canAffectRole', name:    "can-affect-role"},
+     {id: 'canEnterAdmin', name:    "can-enter-admin"}
 ]} />
 {/*       <ReferenceInput source="permission" reference="admin">
         <SelectInput optionText="admin.permission" optionValue="admin.id" />
@@ -98,7 +99,8 @@ export const RoleEdit = (props) => {
      {id: 'canCreateRole', name:    "can-create-role"},
      {id: 'canEditRole', name:      "can-edit-role"},
      {id: 'canDeleteRole', name:    "can-delete-role"},
-     {id: 'canAffectRole', name:    "can-affect-role"}
+     {id: 'canAffectRole', name:    "can-affect-role"},
+     {id: 'canEnterAdmin', name:    "can-enter-admin"}
 ]} />
     </SimpleForm>
   </Edit>

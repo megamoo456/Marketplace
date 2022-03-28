@@ -16,7 +16,7 @@ const productFilters = [
 export const ProductList = (props) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return (
-        <List filters={productFilters} {...props}>
+        <List  {...props}>
             {isSmall ? (
                 <SimpleList
                     primaryText={record => record.title}

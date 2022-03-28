@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Form, Button, Col, Spinner, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../services/userData';
+import { registerUser, getRoles } from '../services/userData';
 import SimpleSider from '../components/Siders/SimpleSider';
 import '../components/Register/Register.css';
 
@@ -9,6 +9,7 @@ function Register({ history }) {
     const [loading, setLoading] = useState(false);
     const [alertShow, setAlertShow] = useState(false);
     const [error, setError] = useState(null);
+    const [role, setRole] = useState([]);
     const [userData, setUserData] = useState({
         name: null,
         lastName: null,
@@ -17,17 +18,28 @@ function Register({ history }) {
         email: "",
         password: "",
         repeatPassword: "",
-        role: null 
+        role: "" 
     });
 
     const handleChanges = (e) => {
         e.preventDefault();
+        console.log(e.target.name,e.target.value)
         setUserData({ ...userData, [e.target.name]: e.target.value });
+        console.log(userData);
+
     }
-      
+ useEffect (()=>{
+    getRoles()
+    .then(res => {setRole(res);
+    })
+            .catch(err => console.log(err));
+              
+},[]); 
+
     const handleSubmitReg = (e) => {
         e.preventDefault();
         setLoading(true);
+        console.log(userData);
         registerUser(userData)
             .then(res => {
                 if (!res.error) {
@@ -38,7 +50,8 @@ function Register({ history }) {
                     setAlertShow(true);
                 }
             }).catch(err => console.error('error from register: ', err))
-    }
+    };
+  
 
     return (
         <>
@@ -85,9 +98,9 @@ function Register({ history }) {
                          <Form.Group as={Col} controlId="formGridGender" className="col-lg-4">
                             <Form.Label>Role *</Form.Label>
                             <Form.Control as="select" name="role"  onChange={handleChanges} required >
-                                <option>Buyer</option>
-                                <option>Seller</option>
-                                <option>Transporter</option>
+                            {role.map(role =>  <option key={role?._id} value={role?._id}>{role.name}</option>  )
+                                }
+                                   
                             </Form.Control>
                         </Form.Group> 
                     </Form.Row>

@@ -68,11 +68,18 @@ function Aside({ params, history }) {
                     {params.price && <h1 id="price-heading">{(params.price).toFixed(2)}€</h1>}
                 </div>
                 {params.isAuth ? (<>
-                    {!params.isSeller &&
+                    {!params.isSeller && 
                         <Button variant="dark" className="col-lg-10" id="btnContact" onClick={handleShow}>
                             <RiMessage3Fill />Contact Seller
                         </Button>
-                    }
+                      
+                    }  
+                    {!params.isSeller && 
+                        <Button  className="col-sm-8" id="btnSignaler" onClick={handleShow}>
+                            <RiMessage3Fill />Signaler Seller
+                        </Button>
+                      
+                    }  
                     <Link to={`/profile/${params.sellerId}`}>
                         <Col lg={12}>
                             <img id="avatar" src={params.avatar} alt="user-avatar" />

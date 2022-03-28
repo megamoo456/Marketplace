@@ -6,6 +6,23 @@ const User = require('../models/User');
 // const isAuth = require('../middlewares/isAuth')
 const productService = require('../services/productService');
 const userService = require('../services/userService');
+const bcrypt = require('bcrypt');
+const { SALT } = require('../config/config')
+
+
+router.get('/', async (req, res) => {
+    try {
+        let user = [];
+        p =  await User.find();
+        for (let i = 0; i < p.length; i++) {
+			user.push(p[i].transform());
+		}
+        res.status(200).json(user);
+     
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
 
 router.get('/', async (req, res) => {
     try {
@@ -114,6 +131,9 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     let { name, phoneNumber, email , password ,repeatPassword, role} = req.body;
+    let salt = await bcrypt.genSalt(SALT);
+    let hash = await bcrypt.hash(password, salt);
+   
     try {
         let errors = [];
         let checkUser = await User.findOne({ email });
@@ -126,8 +146,9 @@ router.put('/:id', async (req, res) => {
         if (errors.length >= 1) throw {message: [errors]}
       
         if (errors.length >= 1) throw { message: [errors] };
-
+        password = hash;
          await userService.edit(req.params.id, { name, phoneNumber, email, password ,repeatPassword, role });
+         
         res.status(201).json({ message: 'Updated!' });
     } catch (err) {
         res.status(404).json({ error: err.message });

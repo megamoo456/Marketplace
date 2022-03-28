@@ -9,7 +9,8 @@
     canCreateRole:    "can-create-role",
     canEditRole:      "can-edit-role",
     canDeleteRole:    "can-delete-role",
-    canAffectRole:    "can-affect-role"
+    canAffectRole:    "can-affect-role",
+    canEnterAdmin:    "can-enter-admin"
   };
   
  

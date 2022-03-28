@@ -9,17 +9,18 @@ const moment = require('moment');
 const roleService = require('../services/roleService');
 const userService = require('../services/userService');
 
-router.get('/roles', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
-        let user = await roleService.getUserById(req.params.id);
-        let jsonRes = {
-            _id: user._id, name: user.name, email: user.email, phoneNumber: user.phoneNumber,
-            totalSells: user.createdSells.length, avatar: user.avatar,
-            isMe: req.user._id == req.params.id
-        }
-        res.status(200).json({user: jsonRes});
+        let role = [];
+        p =  await Role.find();
+        for (let i = 0; i < p.length; i++) {
+            if (p[i].name != "Admin")
+			role.push(p[i]);
+		}
+        res.status(200).json(role);
+     
     } catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ message: error.message })
     }
 })
 router.get('/', async (req, res) => {

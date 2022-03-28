@@ -10,6 +10,9 @@ export async function registerUser(userData) {
         body: JSON.stringify(userData)
     })).json();
 }
+export async function getRoles() {
+    return await (await fetch(baseUrl + '/role/all', {credentials: 'include'})).json()
+}
 
 export async function loginUser(userData) {
     return (await fetch(`/auth/login`, {

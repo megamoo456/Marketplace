@@ -135,6 +135,7 @@ function Messages({ match }) {
             </Row>
         </Container>
     )
+
 }
 
 export default Messages;

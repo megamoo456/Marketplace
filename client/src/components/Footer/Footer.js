@@ -49,46 +49,46 @@ function Footer() {
               </Link>
             </div>
             <small className="website-rights">©2022, AgriMarket - All rights Reserved</small>
-            <div class='social-icons'>
+            <div className='social-icons'>
             <Link
-              class='social-icon-link facebook'
+              className='social-icon-link facebook'
               to='/'
               target='_blank'
               aria-label='Facebook'
             >
-              <i class='pi pi-fw pi-facebook-f' />
+              <i className='pi pi-fw pi-facebook-f' />
             </Link>
             <Link
-              class='social-icon-link instagram'
+              className='social-icon-link instagram'
               to='/'
               target='_blank'
               aria-label='Instagram'
             >
-              <i class='pi pi-fw pi-instagram' />
+              <i className='pi pi-fw pi-instagram' />
             </Link>
             <Link
-              class='social-icon-link youtube'
+              className='social-icon-link youtube'
               to='/'
               target='_blank'
               aria-label='Youtube'
             >
-              <i class='pi pi-fw pi-youtube' />
+              <i className='pi pi-fw pi-youtube' />
             </Link>
             <Link
-              class='social-icon-link twitter'
+              className='social-icon-link twitter'
               to='/'
               target='_blank'
               aria-label='Twitter'
             >
-              <i class='pi pi-fw pi-twitter' />
+              <i className='pi pi-fw pi-twitter' />
             </Link>
             <Link
-              class='social-icon-link twitter'
+              className='social-icon-link twitter'
               to='/'
               target='_blank'
               aria-label='LinkedIn'
             >
-              <i class='pi pi-fw pi-linkedin' />
+              <i className='pi pi-fw pi-linkedin' />
             </Link>
           </div>
           </div>
