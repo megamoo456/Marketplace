@@ -137,6 +137,7 @@ function EditProfile({ history }) {
                         <Button disabled variant="dark" id="active-sells">Active Sells</Button>{' '}
                         <Button disabled variant="dark" id="archived-sells">Archived</Button>{' '}
                         <Button disabled variant="dark" id="wishlist">Wishlist</Button>{' '}
+                        <Button disabled variant="dark" id="your-offers">Your Offers</Button>{' '}
                     </Col>
                     <Col lg={10} sm={12} disabled>
                         <ActiveSells params={user}/>

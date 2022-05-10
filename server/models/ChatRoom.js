@@ -15,6 +15,10 @@ const chatRoomSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'User'
         },
+        offer:{
+            type: mongoose.Types.ObjectId,
+            ref: 'Offer'
+        },
         message: {
             type: String,
             trim: true

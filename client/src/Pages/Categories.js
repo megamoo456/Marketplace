@@ -106,7 +106,7 @@ function Categories({ match }) {
                             })
                             .map(x =>
                                 <Col xs={12} md={6} lg={3} key={x._id.toString()}>
-                                    <ProductCard params={x} />
+                                    <ProductCard params={x} item={x} />
                                 </Col>
                             )}
                     </InfiniteScroll>

@@ -24,19 +24,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    try {
-        let user = [];
-        p =  await User.find();
-        for (let i = 0; i < p.length; i++) {
-			user.push(p[i].transform());
-		}
-        res.status(200).json(user);
-     
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-});
+
 ///// Partie Role Delete+Create ////
 router.post('/create', async (req, res) => {
     try {

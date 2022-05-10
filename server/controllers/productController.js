@@ -71,6 +71,7 @@ router.get('/specific/:id', async (req, res) => {
     try {
         let product = await (await Product.findById(req.params.id)).toJSON()
         let seller = await (await User.findById(product.seller)).toJSON()
+        let user = await (await User.findById(req.user)).toJSON()
         product.addedAt = moment(product.addedAt).format('d MMM YYYY (dddd) HH:mm')
         let jsonRes = {
             ...product,
@@ -80,7 +81,7 @@ router.get('/specific/:id', async (req, res) => {
             createdSells: seller.createdSells.length,
             avatar: seller.avatar,
             sellerId: seller._id,
-            isAuth: false
+            isAuth: false,
         }
         if (req.user) {
             let user = await User.findById(req.user._id)

@@ -45,6 +45,10 @@ export async function archiveSell(id) {
     return (await fetch(`/products/archive/${id}`)).json()
 }
 
+export async function addOffer(id) {
+    return (await fetch(`${baseUrl}/offer/offer/${id}`, { credentials: 'include' })).json();
+}
+
 export async function wishProduct(id) {
     return (await fetch(`${baseUrl}/products/wish/${id}`, { credentials: 'include' })).json();
 }

@@ -53,6 +53,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Product'
         }
     ],
+    yourOffers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Offer'
+        }
+    ],
     chatRooms: [
         {
             type: mongoose.Schema.Types.ObjectId,

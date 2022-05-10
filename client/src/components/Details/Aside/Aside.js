@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState , useContext } from 'react';
+import { Context } from "../../../ContextStore";
+
 import { Button, Modal, Form, OverlayTrigger, Tooltip, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { RiMessage3Fill } from 'react-icons/ri';
@@ -9,18 +11,36 @@ import { MdEmail, MdPhoneAndroid } from 'react-icons/md'
 import { FaSellsy } from 'react-icons/fa'
 import { archiveSell } from '../../../services/productData';
 import { createChatRoom } from '../../../services/messagesData'
+import { useCart } from "react-use-cart";
+
 import './Aside.css';
 
 
 function Aside({ params, history }) {
+    const {userData , setUserData} = useContext(Context);
     const [showMsg, setShowMdg] = useState(false);
     const [showArchive, setShowArchive] = useState(false);
     const [message, setMessage] = useState("");
     const handleClose = () => setShowMdg(false);
     const handleShow = () => setShowMdg(true);
 
+    const [isAdded, setIsAdded] = useState(false);
+
     const handleCloseArchive = () => setShowArchive(false);
     const handleShowArchive = () => setShowArchive(true);
+
+    const handleAddToCart = () => {
+        setIsAdded(true);
+        setTimeout(() => {
+          setIsAdded(false);
+        }, 3500);
+        
+      };
+    
+    const { addItem ,
+        updateItemQuantity,
+
+    } = useCart();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,7 +85,7 @@ function Aside({ params, history }) {
 
                         </>
                     }
-                    {params.price && <h1 id="price-heading">{(params.price).toFixed(2)}€</h1>}
+                    {params.price && <h1 id="price-heading">{(params.price).toFixed(2)}€ - Ton</h1>}
                 </div>
                 {params.isAuth ? (<>
                     {!params.isSeller && 
@@ -74,11 +94,19 @@ function Aside({ params, history }) {
                         </Button>
                       
                     }  
-                    {!params.isSeller && 
-                        <Button  className="col-sm-8" id="btnSignaler" onClick={handleShow}>
-                            <RiMessage3Fill />Signaler Seller
-                        </Button>
-                      
+                    {!params.isSeller &&  
+                    <>
+                          <Button
+                            className="btn btn-success"
+                            onClick={() => {console.log()
+                                handleAddToCart()
+                                addItem(params)
+                            }
+                        }
+                          >
+                            {!isAdded ? "ADD TO CART" : "✔ ADDED"}
+                          </Button>
+                      </>
                     }  
                     <Link to={`/profile/${params.sellerId}`}>
                         <Col lg={12}>

@@ -80,7 +80,8 @@ class AddProduct extends Component {
 
                         <Form.Group controlId="formGridDescription.ControlTextarea1">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} name="description" required onChange={this.onChangeHandler} />
+                            <Form.Control as="textarea" rows={3} name="description" placeholder="Tell us About the product
+                            And how much does you have in total ..." required onChange={this.onChangeHandler} />
                         </Form.Group>
 
                         <Form.Row>

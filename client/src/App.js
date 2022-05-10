@@ -14,7 +14,9 @@ import CreateSell from './Pages/CreateSell';
 import EditProfile from './Pages/EditProfile';
 import Error404 from './Pages/Error404';
 import Messages from './Pages/Messages'
+import Cart from './components/Cart/Cart'
 import Home from './Pages/Home';
+import Checkout from './Pages/Checkout';
 
 function App() {
    return (
@@ -23,6 +25,8 @@ function App() {
          <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/admin" exact component={Home} />
+            <Route path="/cart" exact component={Cart} />
+            <Route path="/checkout" exact component={Checkout} />
             <Route path="/categories" exact component={Categories} />
             <Route path="/categories/:category" exact component={Categories} />
             <Route path="/categories/:category/:id/details" component={Details} />

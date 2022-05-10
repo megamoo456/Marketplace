@@ -8,7 +8,7 @@ video {
 .hero-container{
     background: url('https://medias.pourlascience.fr/api/v1/images/view/5b9691393e4546789831c187/wide_1300/image.jpg') center center/cover
     no-repeat;
-    height: 100vh;
+    height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: column;

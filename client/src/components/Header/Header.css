@@ -178,7 +178,13 @@
     .NavbarItems {
       position: relative;
     }
-  
+    #navImg {
+      margin-left: -150px;
+  }
+  #addButton svg {
+    margin-left: -180px;
+
+}
     .nav-menu {
       display: flex;
       flex-direction: column;
@@ -255,3 +261,35 @@
       transition: 250ms;
     }
   }
+
+  .shopping-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  .cart-icon {
+    margin-left: -66px;
+    z-index: 99;
+    position: relative;
+ }
+ .cart-count {
+  display: block;
+  position: absolute;
+  background: rgb(0, 0, 0);
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  width: 24px;
+  border-radius: 50%;
+  top: -6px;
+  right: -9px;
+}
+
+
+
+ 
+
+

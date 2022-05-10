@@ -39,7 +39,7 @@ function Login({ history }) {
     return (
         <>
             <SimpleSider />
-            <div className="container auth-form">
+            <div className="container auth-form" id='auth-form'>
                 <h1 className="auth-heading">Sign In</h1>
                 <Form className="col-lg-6" onSubmit={handleSubmitLogin}>
                     {alertShow &&

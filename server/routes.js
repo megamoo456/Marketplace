@@ -4,6 +4,7 @@ const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
 const messageController = require('./controllers/messageController');
 const roleController = require('./controllers/roleController');
+const offerController = require('./controllers/offerController');
 const isAuth = require('./middlewares/isAuth');
 
 
@@ -15,6 +16,7 @@ router.use('/auth', authController);
 router.use('/role', roleController);
 router.use('/products', productController);
 router.use('/user', userController);
+router.use('/offer', offerController);
 router.use('/messages', messageController);
 
 

@@ -1,0 +1,29 @@
+.form-group {
+    margin-bottom: 16px;
+}
+.form-group .invalid-feedback {
+    color: #e23d3d;
+    font-size: 14px;
+    margin-top: 8px;
+}
+.form-control {
+    display: block;
+    border-radius: 4px;
+    height: 48px;
+    padding: 0 16px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.form-control:active, .form-control:focus {
+    border-color: #077915;
+}
+.form-control.is-invalid {
+    border-color: #e23d3d;
+}
+.field-group {
+    display: flex;
+    justify-content: space-between;
+}
+.field-group .form-group {
+    flex-basis: 48%;
+}

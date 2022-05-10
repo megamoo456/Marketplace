@@ -1,8 +1,42 @@
+@font-face {
+    font-family: afterglow;
+    src: url("../../assets/fonts/Afterglow-Regular.ttf");
+  }
+.total p {
+    font-size: 5rem;
+}
+.slider-shipping p {
+    border: dashed;
+    border-inline-style: none;
+}
+.slider {
+    display: flex;
+    width: 288px;
+    margin-left: 100px;
+    height: 500px;
+}
+.action-offer{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 23px 23px 23px ;
+}
+.user-name{
+    padding: 14px;
+    font-family: 'afterglow';
+    font-size: 20px;
+    text-transform: uppercase;
+}
 article img {
     width: 50px;
     height: 50px;
     border-radius: 100px;
     object-fit: cover;
+}
+.chat-selected-hb {
+    border-bottom: 1px solid #8080804a;
+    padding: 4px 25px;
+    margin: 6px 10px;
 }
 
 .chat-selected-header {
@@ -12,36 +46,58 @@ article img {
 }
 
 .me {
-    text-align: right;
-    margin: 20px 0px;
+    text-align: left;
+    background: #5d5d5d;
+    padding: 10px;
+    border-radius:18px 18px 4px 18px;
+    width: fit-content;
+    max-width: 100%;
+    color: white;
+    align-self: flex-end;
+    overflow-wrap: break-word;
 }
 
 .me .message {
     text-align: right;
-    width: 50%;
     font-size: 9pt;
-    background: #5d5d5d;
-    padding: 10px;
-    border-radius: 100px;
-    color: white;
+ 
 }
 
 .not-me {
-    text-align: left;
-    margin: 20px 0px;
+    background: rgb(93, 93, 93,0.1);
+    padding: 10px;
+    border-radius:4px 18px 18px 18px;
+    width: fit-content;
+    max-width: 100%;
+    color: #5d5d5d;
+    float: left;
+    align-self: flex-start;
+    overflow-wrap: break-word;
 }
 
 .not-me .message {
     text-align: left;
-    width: 50%;
     font-size: 9pt;
-    background: #ffffff;
-    padding: 10px;
-    border-radius: 100px;
-    border: 1px solid #8080804a;
 }
 
 .chat-selected-footer textarea {
     height: 65px;
     resize: none;
 }
+
+.chat-selected-body{
+    display: flex;
+    flex-direction: column;
+    grid-gap: 9px;
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.chat-input{
+    bottom: 0px;
+}
+@media (min-width:400px) and (max-width:900px) {
+    .chat-input{
+        bottom:0px;
+    }
+ }

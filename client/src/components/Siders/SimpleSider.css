@@ -1,3 +1,8 @@
+#auth-form{
+    min-height: calc(59vh - 86px);
+    overflow: hidden;
+    box-sizing: border-box;
+}
 #simpleSider {
     background-image: url(https://medias.pourlascience.fr/api/v1/images/view/5b9691393e4546789831c187/wide_1300/image.jpg);
     background-position: center;
