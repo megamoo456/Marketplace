@@ -19,6 +19,7 @@ import Home from './Pages/Home';
 import Checkout from './Pages/Checkout';
 
 function App() {
+
    return (
       <>
          <Header />
@@ -41,6 +42,8 @@ function App() {
             <Route path='/messages/:id' exact component={Messages} />;
             <Route component={Error404} />
          </Switch>
+
+
          <Footer />
       </>
    );

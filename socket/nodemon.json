@@ -1,0 +1,15 @@
+{
+    "verbose": true,
+    "ignore": [
+        "node_modules",
+        ".js"
+    ],
+    "watch": [
+        "socket/**/*",
+        "index.js",
+        "api/",
+        "validators/",
+        "models/"
+    ],
+    "ext": "js json"
+}

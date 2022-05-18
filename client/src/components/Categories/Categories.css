@@ -48,7 +48,9 @@
 .spinner {
     text-align: center;
 }
-
+.infinitescroll{
+    min-height: 419px;
+}
 #dropdown-sort {
     padding-bottom: 20px;
     margin-top: -25px;

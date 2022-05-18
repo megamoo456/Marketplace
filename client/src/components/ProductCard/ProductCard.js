@@ -2,12 +2,13 @@ import { Card } from 'react-bootstrap';
 // import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import './ProductCard.css'
 
 function ProductCard({ params }) {
     return (
-        <Card>
+        <Card className='prodcard'>
             <Link to={`/categories/${params.category}/${params._id}/details`}>
-                <Card.Img variant="top" src={params.image} />
+                <Card.Img variant="top" src={params.image} />   
                 <Card.Body>
                     <Card.Title>{params.title}</Card.Title>
                     <Card.Text>{(params.price).toFixed(2)}€</Card.Text>
@@ -23,6 +24,7 @@ function ProductCard({ params }) {
                 </small>
             </Card.Footer>
         </Card>
+        
     )
 }
 

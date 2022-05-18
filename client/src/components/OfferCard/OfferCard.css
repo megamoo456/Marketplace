@@ -9,7 +9,10 @@
 .card {
     margin-bottom: 15%;
 }
-
+.card-footer Button{
+    display: flex;
+    margin-left: 35px;
+}
 .card-text {
     text-align: left;
     font-weight: bold;
@@ -17,9 +20,17 @@
 
 .card-title{
     text-align: center;
+    
 }
+
 .card-footer {
-    text-align: right;
+   display: flex;
+   justify-content: space-around;
+}
+
+.card-footer .card-text{
+   display: flex;
+   justify-content: space-around;
 }
 .card-subtitle {
    padding: 3px;

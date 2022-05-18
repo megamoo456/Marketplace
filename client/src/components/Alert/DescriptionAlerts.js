@@ -4,7 +4,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import './DescriptionAlerts.css'
 
-function DescriptionAlerts(props) {
+export function DescriptionAlerts(props) {
   return (props.trigger) ?(
     <Stack sx={{ width: '100%' }} spacing={2} className='popup'>
       <Alert severity="success" className='popup-inner'>
@@ -17,4 +17,19 @@ function DescriptionAlerts(props) {
       {props.children}
     </Stack>
   ): "" ;
-}export default DescriptionAlerts
+}  
+
+export function DeletedAlerts(props) {
+  return (props.trigger) ?(
+    <Stack sx={{ width: '100%' }} spacing={2} className='popup'>
+      <Alert severity="success" className='popup-inner'>
+      <button className='close-btn' onClick={()=> props.setTrigger(false)}>
+                close
+            </button>
+        <AlertTitle>Success</AlertTitle>
+        <strong> — Your Offer has been Deleted successfully — </strong>
+      </Alert>
+      {props.children}
+    </Stack>
+  ): "" ;
+}  

@@ -9,6 +9,21 @@
     border: dashed;
     border-inline-style: none;
 }
+.menuItemA{
+    margin-bottom: 500px;
+    opacity: 1;
+}
+.menuItemD{
+    opacity: 0;
+}
+.selecteditem{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
 .slider {
     display: flex;
     width: 288px;
@@ -43,6 +58,8 @@ article img {
     border-bottom: 1px solid #8080804a;
     padding: 4px 25px;
     margin: 6px 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .me {

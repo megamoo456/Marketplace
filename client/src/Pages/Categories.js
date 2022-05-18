@@ -88,7 +88,7 @@ function Categories({ match }) {
                             }
                             return false
                         }}
-                        className="row">
+                        className="row infinitescroll">
                         {products
                             .sort((a, b) => {
                                 if (sort === "oldest") {

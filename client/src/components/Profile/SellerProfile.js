@@ -67,7 +67,7 @@ function SellerProfile({ params, history }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="dark" onClick={onMsgSent}>Sent</Button>
+                    <Button variant="dark" onClick={onMsgSent}>Send</Button>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>

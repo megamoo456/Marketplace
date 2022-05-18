@@ -11,6 +11,17 @@ export async function createChatRoom(receiver,message,offer) {
     })).json();
 }
 
+export async function sendreport(id,reason,messageR,buyerid,sellerid) {
+    return (await fetch(`${baseUrl}/messages/sendreport`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({id,messageR,reason,buyerid,sellerid})
+    })).json();
+}
+
 export async function createOffer(offre) {
     return (await fetch(`${baseUrl}/offer/createOffer`, {
         method: 'POST',
@@ -40,13 +51,24 @@ export async function sendMessage(chatId, message) {
         body: JSON.stringify({chatId, message})
     })).json();
 }
-export async function deleteOffer(chatId, id, owner) {
+export async function deleteOffer( id, owner,seller) {
     return (await fetch(`${baseUrl}/messages/deleteOffer/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({id, chatId, owner})
+        body: JSON.stringify({id, owner,seller})
+    })).json();
+}
+
+export async function rejectOffer(chatId, id ) {
+    return (await fetch(`${baseUrl}/messages/rejectOffer/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({id, chatId})
     })).json();
 }

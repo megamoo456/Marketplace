@@ -28,14 +28,26 @@ import {
   clearCart,
 } from "../../contexts/cart";
 
-function Header(props) {
+import { NotificationCenter } from "../NotificationCenter/NotificationCenter";
+import { ToastContainer, toast, TypeOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
+function Header() {
   const { userData, setUserData } = useContext(Context);
 
-  const { items, totalUniqueItems ,emptyCart } = useCart();
+  const { items, totalUniqueItems, emptyCart } = useCart();
 
   const { items: cartItems, isCartOpen } = useContext(CartStateContext);
   const cartDispatch = useContext(CartDispatchContext);
+  /*  Notifation Section */
+  const addNotification = () => {
+    // use a random type of notification
+    toast("Lorem ipsum dolor sit amet, consectetur adipiscing elit", {
+      type: "success",
+    });
+  };
 
+  /*  End  Notifation Section */
   const handleCartButton = (event) => {
     event.preventDefault();
     return toggleCartPopup(cartDispatch);
@@ -104,7 +116,16 @@ function Header(props) {
                                          </Link>
                                      </li>
                                 )}   */}
+                {/* Begin Notification Section */}
+                <div className="nav-item" id="notif" onClick={closeMobileMenu}
+>
+              {/*     <button onClick={addNotification}>Add notificaiton</button>
+                  <hr /> */}
+                  <NotificationCenter />
+                  <ToastContainer position="bottom-right" newestOnTop />
+                </div>
               </ul>
+              {/* END Notification Section */}
 
               <div className="cart">
                 <a className="cart-icon" href="#" onClick={handleCartButton}>
@@ -182,7 +203,7 @@ function Header(props) {
                   onClick={() => {
                     closeMobileMenu();
                     setUserData(null);
-                    emptyCart()
+                    emptyCart();
                   }}
                 >
                   <IoLogOut />

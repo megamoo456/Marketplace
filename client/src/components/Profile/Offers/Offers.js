@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState  } from 'react';
 import OfferCard from '../../OfferCard/OfferCard';
 import { Col, Row, Spinner } from 'react-bootstrap';
 import { getUserOfferlist } from '../../../services/userData';
+import { Context } from "../../../ContextStore";
 
 import '../Wishlist/Wishlist.css';
 function Offers() {

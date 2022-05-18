@@ -2,31 +2,36 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import { Context } from "../ContextStore";
-import "../assets/css/pages/Checkout.css"
-import "../assets/css/base/icons.css"
-import Slider from '@mui/material/Slider';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import { createChatRoom } from '../services/messagesData'
-import { addOffer } from '../services/productData'
-import  DescriptionAlerts  from '../components/Alert/DescriptionAlerts'
+import "../assets/css/pages/Checkout.css";
+import "../assets/css/base/icons.css";
+import Slider from "@mui/material/Slider";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { createChatRoom } from "../services/messagesData";
+import { addOffer } from "../services/productData";
+import { DescriptionAlerts } from "../components/Alert/DescriptionAlerts";
 
 import {
   CheckoutStateContext,
   CheckoutDispatchContext,
   CHECKOUT_STEPS,
   setCheckoutStep,
-  saveShippingAddress
+  saveShippingAddress,
 } from "../contexts/checkout";
 import { useCart } from "react-use-cart";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Input from "../components/core/form-controls/Input";
-import LogOut from "./LogOut"
+import LogOut from "./LogOut";
 import { createOffer } from "../services/messagesData";
 import CounterOffer from "../components/CounterOffer/CounterOffer";
-import  Cart  from "../components/Cart/Cart";
+import Cart from "../components/Cart/Cart";
 import { useLayoutEffect } from "react";
+   /*  Notifation Section */
+   import { ToastContainer, toast } from 'react-toastify';
+   import 'react-toastify/dist/ReactToastify.css';
+
+         /*  End  Notifation Section */
 
 const AddressSchema = Yup.object().shape({
   fullName: Yup.string().required("Full Name is required"),
@@ -38,7 +43,7 @@ const AddressSchema = Yup.object().shape({
   city: Yup.string().required("City is required!"),
   state: Yup.string().required("State is required!"),
   code: Yup.string().required("ZIP/Postal code is required!"),
-  country: Yup.string().required("Country is required!")
+  country: Yup.string().required("Country is required!"),
 });
 
 const LoginStep = () => {
@@ -60,7 +65,7 @@ const LoginStep = () => {
   };
   return (
     <div className="detail-container">
-      <h2>Sign In now!</h2> 
+      <h2>Sign In now!</h2>
       <div className="auth-message">
         {isLoggedIn ? (
           <>
@@ -96,7 +101,6 @@ const AddressStep = () => {
 
   const handleSavewithoutAddress = (addressData) => {
     saveShippingAddress(checkoutDispatch, addressData);
-
   };
   const handleSaveAddress = (addressData) => {
     saveShippingAddress(checkoutDispatch, addressData);
@@ -113,13 +117,13 @@ const AddressStep = () => {
           state: "",
           code: "",
           country: "",
-          shipping: false
+          shipping: false,
         }}
         validationSchema={AddressSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
             values.shipping = true;
-            const addressData = { ...values};
+            const addressData = { ...values };
             resetForm();
             handleSaveAddress(addressData);
           } catch (err) {
@@ -135,7 +139,6 @@ const AddressStep = () => {
                 type="text"
                 placeholder="Full Name"
                 component={Input}
-
               />
               <Field
                 name="phoneNumber"
@@ -184,7 +187,7 @@ const AddressStep = () => {
                 className="outline"
                 onClick={(addressData) => handleSavewithoutAddress(addressData)}
               >
-               Without Shipping
+                Without Shipping
               </button>
               <button type="submit">
                 Save Address
@@ -197,122 +200,145 @@ const AddressStep = () => {
     </div>
   );
 };
+/* Slider of the counter offer */
 const PrettoSlider = styled(Slider)({
-  color: '#52af77',
+  color: "#52af77",
   height: 8,
-  '& .MuiSlider-track': {
-    border: 'none',
+  "& .MuiSlider-track": {
+    border: "none",
   },
-  '& .MuiSlider-thumb': {
+  "& .MuiSlider-thumb": {
     height: 24,
     width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-      boxShadow: 'inherit',
+    backgroundColor: "#fff",
+    border: "2px solid currentColor",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+      boxShadow: "inherit",
     },
-    '&:before': {
-      display: 'none',
+    "&:before": {
+      display: "none",
     },
   },
-  '& .MuiSlider-valueLabel': {
+  "& .MuiSlider-valueLabel": {
     lineHeight: 1.2,
     fontSize: 12,
-    background: 'unset',
+    background: "unset",
     padding: 0,
     width: 32,
     height: 32,
-    borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#52af77',
-    transformOrigin: 'bottom left',
-    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-    '&:before': { display: 'none' },
-    '&.MuiSlider-valueLabelOpen': {
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#52af77",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&:before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
     },
-    '& > *': {
-      transform: 'rotate(45deg)',
+    "& > *": {
+      transform: "rotate(45deg)",
     },
   },
 });
-const PaymentStep = (item,history) => {
+/* END Slider of the counter offer */
+const PaymentStep = (item, history) => {
   const { shippingAddress } = useContext(CheckoutStateContext);
   const checkoutDispatch = useContext(CheckoutDispatchContext);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [AlertPopup, setAlertPopup] = useState(false);
   const [offer, setOffer] = useState({});
-  let subtotal =localStorage.getItem("subtotal");
-  let sellerId =localStorage.getItem("SellerID");
-  let adresse =JSON.parse(localStorage.getItem("checkout"))
+  let subtotal = localStorage.getItem("subtotal");
+  let sellerId = localStorage.getItem("SellerID");
+  let adresse = JSON.parse(localStorage.getItem("checkout"));
   const [valueco, setValueco] = useState();
   const { userData, setUserData } = useContext(Context);
 
   const handleBackToAddress = () => {
-    localStorage.setItem("checkout",'{"shipping":false}');  
+    localStorage.setItem("checkout", '{"shipping":false}');
     setCheckoutStep(checkoutDispatch, CHECKOUT_STEPS.SHIPPING);
   };
-  
-  // Create the offer 
+  /* Create the offer with chatroom , your offer and alert confirmation  */
   const handlePayment = (e) => {
-    createOffer({owner:userData,seller:item.item[0].sellerId,items:item.item,subtotal,adress:adresse})
-    .then((ress) => {
-      console.log(ress)
-      createChatRoom(ress.offer.seller,"Check Out My Offer !",ress.offer)
-      .then((res) => {
-        console.log(res)
-          history.push(`/messages/${res.offerId}`)
-      })
-      .catch(err => console.log(err))
-      addOffer(ress.offer._id)
-      setAlertPopup(true);
-      setTimeout(() => {setAlertPopup(false) }, 4000);
+    createOffer({
+      owner: userData,
+      seller: item.item[0].sellerId,
+      items: item.item,
+      subtotal,
+      adress: adresse,
+      statue: "Pending",
     })
-    .catch(err => console.log(err))
-    localStorage.setItem("checkout",'{"shipping":false}');  
-
-  /*   createChatRoom(sellerId, offer)
-    .then((res) => {
-        history.push(`/messages/${res.messageId}`)
-    })
-    .catch(err => console.log(err)) */
-  };
-// send the counter offer 
-  const send = (e) => {
-  
-      createOffer({owner:userData,seller:item.item[0].sellerId,items:item.item,subtotal:valueco,adress:adresse})
       .then((ress) => {
-        console.log(ress)
-        createChatRoom(ress.offer.seller,"Check Out My Offer !",ress.offer)
-        .then((res) => {
-          console.log(res)
-            history.push(`/messages/${res.offerId}`)
-        })
-        .catch(err => console.log(err))
-        addOffer(ress.offer._id)
+        createChatRoom(ress.offer.seller, "Check Out My Offer !", ress.offer)
+          .then((res) => {
+            console.log(res);
+            history.push(`/messages/${res.offerId}`);
+          })
+          .catch((err) => console.log(err));
+        addOffer(ress.offer._id, ress.offer.seller);
+        toast.info(`Total:${ress.offer.subtotal},Offer Created !`, {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        
         setAlertPopup(true);
-        setTimeout(() => {setAlertPopup(false) }, 4000);
+        setTimeout(() => {
+          setAlertPopup(false);
+        }, 4000);
       })
-      .catch(err => console.log(err))
-      localStorage.setItem("checkout",'{"shipping":false}');  
+      .catch((err) => console.log(err));
+    localStorage.setItem("checkout", '{"shipping":false}');
+
 
   };
- 
+   /* End Creation  */
+  /* send the counter offer */
+  const send = (e) => {
+    createOffer({
+      owner: userData,
+      seller: item.item[0].sellerId,
+      items: item.item,
+      subtotal: valueco,
+      adress: adresse,
+      statue: "Pending",
+    })
+      .then((ress) => {
+        createChatRoom(ress.offer.seller, "Check Out My Offer !", ress.offer)
+          .then((res) => {
+            history.push(`/messages/${res.offerId}`);
+          })
+          .catch((err) => console.log(err));
+        addOffer(ress.offer._id, ress.offer.seller);
+
+        setAlertPopup(true);
+        setTimeout(() => {
+          setAlertPopup(false);
+        }, 4000);
+      })
+      .catch((err) => console.log(err));
+    localStorage.setItem("checkout", '{"shipping":false}');
+  };
+  /* END send the counter offer */
+  /* Change the counter offer total price */
   const [value, setValue] = useState(100);
 
   const handleChange = (event, newValue) => {
-      if (typeof newValue === 'number') {
-        setValue(newValue);
-      }
-      valueLabelFormat(value)
-      setValueco(valueLabelFormat(value));
+    if (typeof newValue === "number") {
+      setValue(newValue);
+    }
+    valueLabelFormat(value);
+    setValueco(valueLabelFormat(value));
   };
-  // value of the counter offer 
+  // value of the counter offer
   function valueLabelFormat(value) {
-    let subtotal =localStorage.getItem("subtotal");
-    var newvalue =(subtotal-(subtotal*value/100)).toFixed(2);
+    let subtotal = localStorage.getItem("subtotal");
+    var newvalue = (subtotal - (subtotal * value) / 100).toFixed(2);
     return newvalue;
   }
-
+  /* End Change the counter offer total price */
 
   return (
     <div className="detail-container">
@@ -329,66 +355,73 @@ const PaymentStep = (item,history) => {
           <i className="rsc-icon-arrow_back" /> Back to Shipping Details
         </button>
         <div className="two-buttons">
-        <button disabled={!shippingAddress} onClick={() =>  setButtonPopup(true)}>
-          Counter offer
-          <i className="rsc-icon-arrow_forward" />
-        </button>
-
-        &nbsp;&nbsp;&nbsp; 
-        <button disabled={!shippingAddress} onClick={() => handlePayment()}>
-          Checkout
-          <i className="rsc-icon-arrow_forward" />
-        </button>
-       <DescriptionAlerts trigger={AlertPopup} setTrigger={setAlertPopup} />
-        
-        
+          <button
+            disabled={!shippingAddress}
+            onClick={() => setButtonPopup(true)}
+          >
+            Counter offer
+            <i className="rsc-icon-arrow_forward" />
+          </button>
+          &nbsp;&nbsp;&nbsp;
+          <button disabled={!shippingAddress} onClick={() => {handlePayment();}}>
+            Checkout
+            <i className="rsc-icon-arrow_forward" />
+          </button>
+          <DescriptionAlerts trigger={AlertPopup} setTrigger={setAlertPopup} />
         </div>
         <CounterOffer trigger={buttonPopup} setTrigger={setButtonPopup}>
-        <Typography gutterBottom >Discount {`(${value} %)`}</Typography> 
-        <PrettoSlider
-        value={value}
-        valueLabelDisplay="auto"
-        aria-label="pretto slider"
-        onChange={handleChange}
-        defaultValue={20}
-      />
-      <Typography gutterBottom>Total</Typography> 
-      <Typography gutterBottom >{valueco} €</Typography> 
-      &nbsp;&nbsp;&nbsp; 
-      <button onClick={() => {
-      
-            send()}}>
-          Send
-          <i className="rsc-icon-arrow_forward" />
-        </button>
-        <DescriptionAlerts trigger={AlertPopup} setTrigger={setAlertPopup} />
-            </CounterOffer>
+          <Typography gutterBottom>Discount {`(${value} %)`}</Typography>
+          <PrettoSlider
+            value={value}
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            onChange={handleChange}
+            defaultValue={20}
+          />
+          <Typography gutterBottom>Total</Typography>
+          <Typography gutterBottom>{valueco} €</Typography>
+          &nbsp;&nbsp;&nbsp;
+          <button
+            onClick={() => {
+              send();
+            }}
+          >
+            Send
+            <i className="rsc-icon-arrow_forward" />
+          </button>
+          <DescriptionAlerts trigger={AlertPopup} setTrigger={setAlertPopup} />
+        </CounterOffer>
       </div>
     </div>
   );
 };
 
 const Checkout = (props) => {
-  const { items = [] , cartTotal } = useCart();
+  const { items = [], cartTotal } = useCart();
   const { isLoggedIn } = useContext(Context);
   const { step, shippingAddress } = useContext(CheckoutStateContext);
   const checkoutDispatch = useContext(CheckoutDispatchContext);
   const [Subtotal, setSubtotal] = useState();
-  const [filtredItem , setFiltredItem] = useState([]);
+  const [filtredItem, setFiltredItem] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   let seller =localStorage.getItem("Seller");
+    let seller = localStorage.getItem("Seller");
     // setTimeout(() => {setLoading(true) }, 500)
-     setFiltredItem(items.filter(element => element.name === seller))
-     setSubtotal(items.filter(element => element.name === seller).reduce(getSum, 0)) 
+    setFiltredItem(items.filter((element) => element.name === seller));
+    setSubtotal(
+      items.filter((element) => element.name === seller).reduce(getSum, 0)
+    );
     // setLoading(false);
-  localStorage.setItem("subtotal",items.filter(element => element.name === seller).reduce(getSum, 0));
-  },[items])
+    localStorage.setItem(
+      "subtotal",
+      items.filter((element) => element.name === seller).reduce(getSum, 0)
+    );
+  }, [items]);
 
   const getSum = (total, item) => {
-    return total + item.itemTotal ;
-  } 
+    return total + item.itemTotal;
+  };
 
   const handleClickTimeline = (nextStep) => {
     setCheckoutStep(checkoutDispatch, nextStep);
@@ -399,11 +432,10 @@ const Checkout = (props) => {
       <div className="container">
         <div className="order-details">
           <ul className="timeline">
-
             <li
               className={classNames({
                 done: shippingAddress !== null,
-                active: step === CHECKOUT_STEPS.SHIPPING
+                active: step === CHECKOUT_STEPS.SHIPPING,
               })}
               onClick={() => handleClickTimeline(CHECKOUT_STEPS.SHIPPING)}
             >
@@ -413,7 +445,7 @@ const Checkout = (props) => {
             <li
               className={classNames({
                 done: false,
-                active: step === CHECKOUT_STEPS.PAYMENT
+                active: step === CHECKOUT_STEPS.PAYMENT,
               })}
               onClick={() => handleClickTimeline(CHECKOUT_STEPS.PAYMENT)}
             >
@@ -422,16 +454,18 @@ const Checkout = (props) => {
             </li>
           </ul>
           {step === CHECKOUT_STEPS.SHIPPING && <AddressStep />}
-          {step === CHECKOUT_STEPS.PAYMENT && <PaymentStep item={filtredItem} total={Subtotal}  />}
+          {step === CHECKOUT_STEPS.PAYMENT && (
+            <PaymentStep item={filtredItem} total={Subtotal} />
+          )}
         </div>
-        
+
         <div className="order-summary">
-          <h2>
-            Summary
-          </h2>
+          <h2>Summary</h2>
           <ul className="cart-items">
             {filtredItem.map((product, idx) => {
-              return props.loading ? <p>Loading...</p> : (
+              return props.loading ? (
+                <p>Loading...</p>
+              ) : (
                 <li className="cart-item" key={idx}>
                   <img className="product-image" src={product.image} />
                   <div className="product-info">
@@ -450,7 +484,7 @@ const Checkout = (props) => {
               );
             })}
           </ul>
-        
+
           <ul className="total-breakup">
             <li className="subtotal">
               <span>Subtotal</span>

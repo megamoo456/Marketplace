@@ -14,11 +14,12 @@ router.post('/createOffer', async (req, res) => {
     }
 })
 
-router.get('/offer/:id', async (req, res) => {
+router.patch('/offer/:id', async (req, res) => {
+    let { seller } = req.body;
     try {
         let user = await User.findById(req.user._id);
-        let offer =  await offerService.findByOwner(req.user._id);
         if (!user.yourOffers.includes(req.params.id)) {
+            await User.updateOne({ _id: seller }, { $push: { yourOffers: req.params.id } });
             await User.updateOne({ _id: req.user._id }, { $push: { yourOffers: req.params.id } });
             res.status(200).json({ msg: "offer added !" });
         } 
@@ -30,7 +31,6 @@ router.get('/offer/:id', async (req, res) => {
 router.get('/offerlist/:id', async (req, res) => {
     try {
         let user = await (await User.findById(req.user._id).populate('yourOffers')).toJSON();
-
         res.status(200).json({ yourOffers: user.yourOffers });
     } catch (error) {
         res.status(500).json({ message: error.message })

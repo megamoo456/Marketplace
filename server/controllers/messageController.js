@@ -23,6 +23,19 @@ router.post('/createChatRoom', async (req, res) => {
     }
 })
 
+router.post('/sendreport', async (req, res) => {
+    const { id,reason,messageR,buyerid,sellerid} = req.body;
+    let user={}
+
+    if(req.user._id == sellerid){
+     user = await User.updateOne({ _id: buyerid }, { $push: { reports: { Reason: reason, details:messageR } } });
+    } else{
+     user = await User.updateOne({ _id: sellerid }, { $push: { reports: { Reason: reason, details:messageR } } });
+    } 
+     console.log(user)
+    res.status(200).json({ user })
+})
+
 router.get('/getUserConversations', async (req, res) => {
     let allChats = await ChatRoom.find().populate("buyer").populate("seller");
     let userChats = allChats.filter(x => x.buyer._id == req.user._id || x.seller._id == req.user._id)
@@ -47,13 +60,27 @@ router.post('/sendMessage', async (req, res) => {
 })
 
 router.delete('/deleteOffer/:id', async (req, res) => {
-    let { chatId, id ,owner} = req.body;
+    let {  id ,owner,seller} = req.body;
     try {
         let offer = await Offer.findByIdAndDelete(req.params.id);
-        let chat = await ChatRoom.updateOne({ _id: chatId }, { $pull: { conversation: { offer: req.params.id} } })
         let user = await User.updateOne({ _id: owner }, {$pull: {yourOffers: req.params.id}});
+        let slr = await User.updateOne({ _id: seller }, {$pull: {yourOffers: req.params.id}});
         
-        res.status(201).json({ offer,chat,user});
+        res.status(201).json({ offer,user,slr});
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({ error: error.message })
+    }
+})
+
+router.patch('/rejectOffer/:id', async (req, res) => {
+    let { chatId } = req.body;
+    try {
+        let statue = await Offer.updateOne({ _id: req.params.id }, { $set: { statue: "Rejected" } });
+        let chat = await ChatRoom.updateOne({ _id: chatId }, { $pull: { conversation: { offer: req.params.id} } })
+
+        
+        res.status(201).json({ statue , chat});
     } catch (error) {
         console.log(error)
         res.status(404).json({ error: error.message })

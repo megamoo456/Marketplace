@@ -45,8 +45,26 @@ export async function archiveSell(id) {
     return (await fetch(`/products/archive/${id}`)).json()
 }
 
-export async function addOffer(id) {
-    return (await fetch(`${baseUrl}/offer/offer/${id}`, { credentials: 'include' })).json();
+export async function addOffer(id,seller) {
+    return (await fetch(`${baseUrl}/offer/offer/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({seller})
+    })).json();
+}
+
+export async function updateitems(offerid,id,product,total) {
+    return (await fetch(`${baseUrl}/products/offerupdate/${offerid}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({product,total})
+    })).json();
 }
 
 export async function wishProduct(id) {

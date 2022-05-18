@@ -1,3 +1,7 @@
+#notif{
+  width: 64px;
+    padding-top: 39px;
+}
 .dropdown-item svg {
     margin-bottom: 2px;
     margin-right: 7px;
@@ -184,6 +188,11 @@
   #addButton svg {
     margin-left: -180px;
 
+}
+#notif{
+  margin-left: -66px;
+  z-index: 99;
+  position: relative;
 }
     .nav-menu {
       display: flex;

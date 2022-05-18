@@ -16,36 +16,33 @@ function Getstarted() {
         </p>
         <div className="row">
           <div className="col-sm-12 col-md-6">
-            <h2>Post Offer as a seller</h2>
+            <h2>Post product as a seller</h2>
             <p>
-              As a seller, post offers for the agricultural crop you are looking
-              to sell, and gain immediate access to credit-verified buyers. Or
-              simply react to an existing buyer’s bid and start your
-              transaction.
+              As a seller, post products for the agricultural crop you are looking
+              to sell, and gain immediate access to credit-verified buyers. And you can communicate with other
+              farmers or sellers. 
             </p>
             <div className="row get-started-btn">
               <div className="col-sm-12 col-md-6 left">
                 <a className="btnn"> Register as a seller</a>
               </div>
               <div className="col-sm-12 col-md-6 right">
-                <a className="btnn">Selling offer video</a>
+                <a className="btnn">Selling product video</a>
                 </div>
             </div>
           </div>
           <div className="col-sm-12 col-md-6">
-            <h2>Post Offer as a seller</h2>
+            <h2>Post offer as a buyer</h2>
             <p>
-              As a seller, post offers for the agricultural crop you are looking
-              to sell, and gain immediate access to credit-verified buyers. Or
-              simply react to an existing buyer’s bid and start your
-              transaction.
+            As a buyer, post offers for the agricultural crop you are looking to buy.
+             Communicate to the market what you are looking for, and get rapid reactions from interested farmers or sellers.
             </p>
             <div className="row get-started-btn">
               <div className="col-sm-12 col-md-6 left">
-                <a className="btnn"> Register as a seller</a>
+                <a className="btnn"> Register as a buyer</a>
               </div>
               <div className="col-sm-12 col-md-6 right">
-                <a className="btnn">Selling offer video</a>
+                <a className="btnn">Buying offer video</a>
                 </div>
             </div>
           </div>

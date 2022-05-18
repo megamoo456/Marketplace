@@ -43,7 +43,7 @@ const MyLoginPage = ({ history }) => {
       <div className="outer">
         <div className="inner">
           <h1 className="auth-heading">Sign In</h1>
-          <Form onSubmit={submit}>
+          <Form className="form-login" onSubmit={submit}>
             {alertShow && (
               <Alert
                 variant="danger"

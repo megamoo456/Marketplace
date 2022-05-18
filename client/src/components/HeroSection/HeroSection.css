@@ -1,58 +1,114 @@
-video {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: -1;
-}
-.hero-container{
-    background: url('https://medias.pourlascience.fr/api/v1/images/view/5b9691393e4546789831c187/wide_1300/image.jpg') center center/cover
-    no-repeat;
-    height: 50vh;
-    width: 100%;
+.row {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.container {
+    max-width: 960px;
+
+}
+.paragraph1 {
+    font-family: "FestivoLettersNo19";
+    font-size: 33px;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.13;
+    text-align: justify;
+    max-width: 625px;
+}
+.container-banner{
+    background-image: linear-gradient(282deg, rgba(174,213,121,0), rgba(99,144,56,0.8)),url("../../assets/img/wheat_banner.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.container-banner__right {
+    color: white;
+    background-color: rgba(116,171,78,0.8);
+    padding-top: 5%;
+    height: 505px;
+    padding-bottom: 5%;
+}
+.container-banner__family {
+    display: inline-block;
+    padding: 22px 10px 0;
+}
+.social_media_icon {
+    height: 40px;
+    margin-left: 5px;
+    float: right;
+}
+.social_media_row {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.right__title {
+    font-family: "FestivoLettersNo19";
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.circle-white {
+    width: 74px;
+    height: 74px;
+    background-color: #ffffff;
+    border-radius: 93px;
+    box-shadow: 0 3px 4px 0 rgb(0 0 0 / 20%);
+    margin: auto;
+}
+.product__img {
+    width: 64px;
+    height: 64px;
+    -o-object-fit: contain;
     object-fit: contain;
+    margin: 5px;
 }
-.hero-container > h1 {
-    color: wheat;
-    font-size: 100px;
-    margin-top: -100px;
+.product__text, .product__text__services {
+    font-family: "FestivoLettersNo19";
+    font-size: 13px;
+    text-transform: uppercase;
+    padding-top: 5px;
 }
-.hero-container > p {
-    margin-top: 8px;
-    color: wheat;
-    font-size: 32px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.container-banner__families {
+    text-align: center;
 }
-.hero-btns {
-    margin-top: 32px;
+.container-banner-talk-us-label {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 15px;
+    text-transform: uppercase;
+    font-family: "FestivoLettersNo19";
+    color: white;
 }
-.hero-btns .btn {
-    margin: 6px;
+.container-banner__left {
+    color: #fafafa;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
 }
-@media screen and (max-width:960px) {
-    .hero-container > h1 {
-        font-size: 70px;
-        margin-top: -150px;
-    }
+.relative-flex {
+    position: relative;
 }
-@media screen and (max-width:768px) {
-    .hero-container > h1 {
-        font-size: 50px;
-        margin-top: -100px;
-    }
-    .hero-container >p {
-        font-size: 30px;
-    }
-    .btn-mobile {
-        display: block;
-        text-decoration: none;
-    }
-    .btn {
-        width: 100%;
-    }
+.white {
+    color: white;
+}
+.word {
+    margin: auto;
+    color: white;
+    font: 700 normal 2.5em 'cursive';
+    font-family: cursive;
+    padding-top: 3rem;
+}
+
+
+.social_media_row {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 15px;
+    width: 100%;
 }

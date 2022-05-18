@@ -64,7 +64,10 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'ChatRoom'
         }
-    ]
+    ],
+    reports:{
+        type:Array,
+    }
 });
 
 userSchema.pre('save', async function (next) {

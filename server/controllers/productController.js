@@ -4,6 +4,7 @@ const { cloudinary } = require('../config/cloudinary');
 const isAuth = require('../middlewares/isAuth')
 const Product = require('../models/Product');
 const User = require('../models/User');
+const Offer = require('../models/Offer');
 const moment = require('moment');
 
 const productService = require('../services/productService');
@@ -233,5 +234,50 @@ router.get('/wishlist/:id', async (req, res) => {
     }
 });
 
+router.patch('/offerupdate/:offerid/:id', async (req, res) => {
+    let { product,total } = req.body;
+    try {
+     /*    let offers = [];
+        p =  await Offer.find();
+        for (let i = 0; i < p.length; i++) {
+            console.log(p[i]._id)
+			for (let j = 0; j < p[i].items.length; j++) {
+                if(p[i].items[j]._id == req.params.id){
+                console.log("i m here !!!")
+                offers.push(p[i]);
+                console.log(product.quantity)
+                  }   
+            }
+		} */
+        console.log(req.params.offerid)
+        await Offer.findOneAndUpdate(
+            {_id : req.params.offerid}, 
+            { $set: { "items.$[i].quantity": parseInt(product.quantity),"items.$[i].price": parseInt(product.price) ,"items.$[i].itemTotal": parseInt(total)} },
+            { multi:true,new: true, arrayFilters: [{ "i._id" : req.params.id},{"s._id":req.params.offerid}], overwrite: true, upsert: false });
+        
+        let sub = 0 ;   
+        p = await Offer.findById(req.params.offerid)
+        
+            console.log(p._id)
+			for (let j = 0; j < p.items.length; j++) {
+                console.log(p.items.length)
+                console.log("i m here !!!")
+                sub = p.items[j].itemTotal + sub
+                console.log(sub)
+                   
+            }
+
+        await Offer.findOneAndUpdate(
+            {_id : req.params.offerid},
+            {$set : {subtotal : sub}},
+            {new:true, overwrite:true,upsert:false}
+        );
+        res.status(200).json({ msg: "offer Updated !" });
+           
+         
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
 
 module.exports = router;

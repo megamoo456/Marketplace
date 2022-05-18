@@ -27,6 +27,10 @@ const offerSchema = new mongoose.Schema({
     subtotal: {
         type: Number,
     },
+    statue:{
+        type:Array,
+            default:['Pending']
+    },
     adress:{
         type: childSchema,
         default: () => ({})
