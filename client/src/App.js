@@ -17,6 +17,7 @@ import Messages from './Pages/Messages'
 import Cart from './components/Cart/Cart'
 import Home from './Pages/Home';
 import Checkout from './Pages/Checkout';
+import Transport from './Pages/Transport';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/cart" exact component={Cart} />
             <Route path="/checkout" exact component={Checkout} />
             <Route path="/categories" exact component={Categories} />
+            <Route path="/transport" exact component={Transport} />
             <Route path="/categories/:category" exact component={Categories} />
             <Route path="/categories/:category/:id/details" component={Details} />
             <Route path="/categories/:category/:id/edit" component={Edit} />

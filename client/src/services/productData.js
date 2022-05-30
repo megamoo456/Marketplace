@@ -10,6 +10,16 @@ export async function getAll(page, category, query) {
     }
 }
 
+export async function getOfferTran(page, offers, query) {
+    if (query !== "" && query !== undefined) {
+        return (await fetch(`${baseUrl}/products/offertran?page=${page}&search=${query}`, { credentials: 'include' })).json();
+    } else if (offers && offers !== 'offertran') {
+        return (await fetch(`${baseUrl}/products/${offers}?page=${page}`, { credentials: 'include' })).json();
+    } else {
+        return (await fetch(`${baseUrl}/products/offertran?page=${page}`, { credentials: 'include' })).json();
+    }
+}
+
 export async function getSpecific(id) {
     return (await fetch(`${baseUrl}/products/specific/${id}`, { credentials: 'include' })).json();
 }

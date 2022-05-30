@@ -2,6 +2,7 @@ import "./App.css";
 import { Admin, Resource } from "react-admin";
 import { UserList, UserCreate ,UserEdit} from './components/users';
 import { RoleList, RolesCreate, RoleEdit } from './components/role';
+import { OfferList } from './components/offer';
 import { ProductList } from './components/product';
 import PostIcon from '@material-ui/icons/Book';
 import UserIcon from '@material-ui/icons/Group';
@@ -18,6 +19,7 @@ function App() {
     <Admin loginPage={MyLoginPage} catchAll={NotFound}  authProvider={authProvider} dataProvider={dataProvider}>
       
       <Resource name="products" list={ProductList} />
+      <Resource name="offer" list={OfferList} />
       <Resource name="user" list={UserList} icon={UserIcon} create={UserCreate} edit={UserEdit}/> 
       <Resource name="role" list={RoleList} icon={PostIcon} create={RolesCreate} edit={RoleEdit} /> 
     </Admin>

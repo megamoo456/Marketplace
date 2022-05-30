@@ -6,6 +6,7 @@ import {
   sendMessage,
   rejectOffer,
   sendreport,
+  confirmOffer,
 } from "../services/messagesData";
 import {
   Container,
@@ -119,6 +120,7 @@ function Messages({ match }) {
   const [items, setItems] = useState([]);
   const [activeitem, setActiveitem] = useState(false);
   const [open, setOpen] = useState(false);
+  const [aftercounter, setAftercounter] = useState(false);
   const [newValue, setNewValue] = useState();
   const [selecteditem, setSelecteditem] = useState({});
   const [selectedoffer, setSelectedoffer] = useState({});
@@ -173,6 +175,9 @@ function Messages({ match }) {
   const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(null);
   const [alertShow, setAlertShow] = useState(false);
+  const [isconfirmed, setIsconfirmed] = useState(false);
+  const [isrejected, setIsrejected] = useState(false);
+
   const notify = () =>
     toast.success("Offer Updated !", {
       position: "top-left",
@@ -226,8 +231,34 @@ function Messages({ match }) {
         )
       );
     }
-  }, [isSelected, chatId, setSelected, setOffers]);
-
+    if (isconfirmed) {
+      setTimeout(() => {
+        toast.success("Your Offer is Confirmed ! , Crongrats ..", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }, 5000);
+    }
+    if (isrejected) {
+      setTimeout(() => {
+        toast.error("Your Offer has been Rejected ! , Try again ..", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }, 5000);
+    }
+  }, [isrejected,isconfirmed, isSelected, chatId, setSelected, setOffers]);
+  /* Begin Handle Offers */
   function rejecttheOffer(e, id) {
     e.preventDefault();
     rejectOffer(chatId, id)
@@ -243,11 +274,35 @@ function Messages({ match }) {
         setTimeout(() => {
           setAlert(null);
           setAlertShow(false);
+          setIsrejected(true);
+          window.location.reload(false);
+        }, 1000);
+      })
+      .catch((err) => console.log(err));
+
+  }
+  function confirmtheOffer(e, id) {
+    e.preventDefault();
+    confirmOffer(chatId, id)
+      .then((res) => {
+        console.log(res);
+        setAlert("Offer Confirmed !");
+        setAlertShow(true);
+        setMessage("I Confirmed Your Offer");
+        setSelected(
+          selected,
+          selected.chats.conversation.push({ message, senderId: res.seller })
+        );
+        setTimeout(() => {
+          setAlert(null);
+          setAlertShow(false);
+          setIsconfirmed(true);
           window.location.reload(false);
         }, 1000);
       })
       .catch((err) => console.log(err));
   }
+  /* END Handle Offers */
 
   function handleMsgSubmit(e) {
     e.preventDefault();
@@ -278,8 +333,8 @@ function Messages({ match }) {
 
   const handleMsgChangeS = (e) => {
     e.preventDefault();
-    setMessageR(e.target.value)
-}
+    setMessageR(e.target.value);
+  };
   const handleCloseS = () => {
     setOpenS(false);
   };
@@ -290,17 +345,26 @@ function Messages({ match }) {
   const handleChangeS = (event) => {
     setReason(event.target.value);
   };
-  const onMsgSendS = (e,id,buyerid,sellerid) => {
+  const onMsgSendS = (e, id, buyerid, sellerid) => {
     e.preventDefault();
-    sendreport(id,reason, messageR,buyerid,sellerid)
-        .then((res) => {
-        console.log(res)
-        })
-        .catch(err => console.log(err))
-}
+    sendreport(id, reason, messageR, buyerid, sellerid)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+    toast.info(`User is Reported for ${reason} !`, {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
   /* End signaler user */
   return (
-    <Container>
+    <Container id="empty-message" >
       <Row>
         <aside className="col-lg-4 col-md-4">
           <h3>Conversations</h3>
@@ -308,67 +372,28 @@ function Messages({ match }) {
             <>
               {conversations.map((x) => (
                 <>
-                <div className="chat-connections" key={x.chats._id}>
-                  <Link
-                    onClick={() => setIsSelected(true)}
-                    to={`/messages/${x.chats._id}`}
-                  >
-                    {x.isBuyer ? (
-                      <>
-                        <img src={x.chats.seller.avatar} alt="user-avatar" />{" "}
-                        <span className="user-name">{x.chats.seller.name}</span>
-                      </>
-                    ) : (
-                      <>
-                        <img src={x.chats.buyer.avatar} alt="user-avatar" />{" "}
-                        <span className="user-name">{x.chats.buyer.name}</span>
-                      </>
-                    )}
-                  </Link>
-                </div>
-                <Modal show={showMsg} onHide={handleCloseU} >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Report the user</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Form>
-                    <FormControl sx={{ m: 1, minWidth: 120  }}>
-                        <InputLabel id="demo-controlled-open-select-label">
-                          Reasons
-                        </InputLabel>
-                        <Select
-                          labelId="demo-controlled-open-select-label"
-                          id="demo-controlled-open-select"
-                          open={openS}
-                          onClose={handleCloseS}
-                          onOpen={handleOpenS}
-                          value={reason}
-                          label="Reasons"
-                          onChange={handleChangeS}
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={"Sexual Abuse"}>Sexual Abuse</MenuItem>
-                          <MenuItem value={"Spamming"}>Spamming</MenuItem>
-                          <MenuItem value={"Fake User"}>Fake User</MenuItem>
-                          <MenuItem value={"Verbal Abuse"}>Verbal Abuse</MenuItem>
-                          <MenuItem value={"Trolling"}>Trolling</MenuItem>
-                        </Select>
-                  </FormControl>
-                  <InputLabel >
-                          Explain
-                        </InputLabel>
-                  <Form.Control as="textarea" name="textarea" onChange={handleMsgChangeS} rows={2} />
-                    </Form>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="dark" onClick={(e)=> onMsgSendS(e,x.chats._id,x.chats.buyer._id,x.chats.seller._id)}>Send</Button>
-                    <Button variant="secondary" onClick={handleCloseU}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
+                  <div className="chat-connections" key={x.chats._id}>
+                    <Link
+                      onClick={() => setIsSelected(true)}
+                      to={`/messages/${x.chats._id}`}
+                    >
+                      {x.isBuyer ? (
+                        <>
+                          <img src={x.chats.seller.avatar} alt="user-avatar" />{" "}
+                          <span className="user-name">
+                            {x.chats.seller.name}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <img src={x.chats.buyer.avatar} alt="user-avatar" />{" "}
+                          <span className="user-name">
+                            {x.chats.buyer.name}
+                          </span>
+                        </>
+                      )}
+                    </Link>
+                  </div>
                 </>
               ))}
             </>
@@ -379,6 +404,65 @@ function Messages({ match }) {
         <article className="col-lg-8 col-md-8">
           {isSelected && (
             <>
+              {" "}
+              <Modal show={showMsg} onHide={handleCloseU}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Report the user</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                      <InputLabel id="demo-controlled-open-select-label">
+                        Reasons
+                      </InputLabel>
+                      <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        open={openS}
+                        onClose={handleCloseS}
+                        onOpen={handleOpenS}
+                        value={reason}
+                        label="Reasons"
+                        onChange={handleChangeS}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={"Sexual Abuse"}>Sexual Abuse</MenuItem>
+                        <MenuItem value={"Spamming"}>Spamming</MenuItem>
+                        <MenuItem value={"Fake User"}>Fake User</MenuItem>
+                        <MenuItem value={"Verbal Abuse"}>Verbal Abuse</MenuItem>
+                        <MenuItem value={"Trolling"}>Trolling</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <InputLabel>Explain</InputLabel>
+                    <Form.Control
+                      as="textarea"
+                      name="textarea"
+                      onChange={handleMsgChangeS}
+                      rows={2}
+                    />
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="dark"
+                    onClick={(e) =>
+                      onMsgSendS(
+                        e,
+                        selected.chats._id,
+                        selected.chats.buyer._id,
+                        selected.chats.seller._id
+                      )
+                    }
+                  >
+                    Send
+                  </Button>
+                  <Button variant="secondary" onClick={handleCloseU}>
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               <div className="chat-selected-header col-lg-12">
                 {selected.isBuyer ? (
                   <>
@@ -392,7 +476,7 @@ function Messages({ match }) {
                       </span>
                     </Link>
                     <Button sx={{ color: "red" }} onClick={handleShowU}>
-                      Signaler
+                      Report
                     </Button>
                   </>
                 ) : (
@@ -411,7 +495,6 @@ function Messages({ match }) {
                     </Button>
                   </>
                 )}
-              
               </div>
               {alertShow && (
                 <Alert
@@ -600,10 +683,15 @@ function Messages({ match }) {
                       </AccordionDetails>
                       {/* END Detailed items in the offer */}
                       {/* Button for the offer */}
-                      {x.isSeller ? (
+                      {x.isSeller  ? (
                         <>
                           <div className="container action-offer">
-                            <Button variant="contained" color="success">
+                            <Button
+                              variant="contained"
+                              color="success"
+                              disabled={x.offers.isCounteredbyseller}
+                              onClick={(e) => confirmtheOffer(e, x.offers._id)}
+                            >
                               Confirme
                             </Button>
                             <Button
@@ -624,6 +712,22 @@ function Messages({ match }) {
                           </div>
                         </>
                       ) : (
+                        <div className="container action-offer">
+                        <Button
+                        variant="contained"
+                        color="success"
+                        disabled={!x.offers.isCounteredbyseller}
+                        onClick={(e) => confirmtheOffer(e, x.offers._id)}
+                      >
+                        Confirme
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="warning"
+                        onClick={() => setButtonPopup(true)}
+                      >
+                        Counter Offer
+                      </Button>
                         <Button
                           variant="outlined"
                           color="error"
@@ -631,6 +735,7 @@ function Messages({ match }) {
                         >
                           Cancel
                         </Button>
+                        </div>
                       )}
                       {/* End Button for the offer */}
                       {/* Begin pop up counter offer */}

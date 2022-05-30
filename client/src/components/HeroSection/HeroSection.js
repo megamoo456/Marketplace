@@ -4,6 +4,7 @@ import { useRef, useEffect,useState } from 'react';
 import "./HeroSection.css";
 import "../../App.css";
 import $ from 'jquery'; 
+import { useIsMounted } from "../../hooks/useIsMounted";
 
 
 function HeroSection() {
@@ -49,26 +50,23 @@ var wordflick = function () {
       }
     }
     $('.word').text(part);
-  },speed);
+  } ,speed);
   
 };
 
 
 const intervalId = useRef(null)
+const isMounted = useIsMounted();
+const mounted = useRef(false);
 
 useEffect(() => {
   
-  if(isplaying){
-  
-  intervalId.current = wordflick();}
-  else
-  clearInterval(intervalId.current)
-   // it's better to clean up your component
-   return () => {
-    clearInterval(intervalId.current)
- }
+  wordflick();
+  if(isMounted)
+  clearInterval(wordflick());
+ 
 
-}, []);
+}, [isMounted]);
   return (
     <div className="container-banner">
       <div className="container">
@@ -79,9 +77,9 @@ useEffect(() => {
                 a b2b digital marketplace where fair food trade is made easy,
                 fast and transparent!
               </h2>
-              <div class="word">
+              <p class="word">
                 
-              </div>
+              </p>
               <div class="row social_media_row">
                 <div class="col-lg-6 col-md-4 center">
                   <a href="/users/sign_up">

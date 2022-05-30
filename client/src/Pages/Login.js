@@ -28,6 +28,7 @@ function Login({ history }) {
                 if (!res.error) {
                     setUserData(res.user)
                     history.push('/')
+                  window.location.reload(false);
                 } else {
                     setLoading(false);
                     setError(res.error.message);

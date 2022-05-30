@@ -72,3 +72,25 @@ export async function rejectOffer(chatId, id ) {
         body: JSON.stringify({id, chatId})
     })).json();
 }
+
+export async function offertransport(id) {
+    return (await fetch(`${baseUrl}/messages/offertransport/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({id})
+    })).json();
+}
+
+export async function confirmOffer(chatId, id ) {
+    return (await fetch(`${baseUrl}/messages/confirmOffer/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({id, chatId})
+    })).json();
+}

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Context } from "../../ContextStore";
 import {
   Navbar,
@@ -20,6 +20,7 @@ import "./Header.css";
 import Cart from "../Cart/Cart";
 import { useCart } from "react-use-cart";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
+import { getUser, getUserRole } from "../../services/userData";
 
 import {
   CartStateContext,
@@ -31,21 +32,17 @@ import {
 import { NotificationCenter } from "../NotificationCenter/NotificationCenter";
 import { ToastContainer, toast, TypeOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { useIsMounted } from "../../hooks/useIsMounted";
 
 function Header() {
   const { userData, setUserData } = useContext(Context);
-
   const { items, totalUniqueItems, emptyCart } = useCart();
+  const [roles, setRoles] = useState([]);
 
   const { items: cartItems, isCartOpen } = useContext(CartStateContext);
   const cartDispatch = useContext(CartDispatchContext);
   /*  Notifation Section */
-  const addNotification = () => {
-    // use a random type of notification
-    toast("Lorem ipsum dolor sit amet, consectetur adipiscing elit", {
-      type: "success",
-    });
-  };
+
 
   /*  End  Notifation Section */
   const handleCartButton = (event) => {
@@ -64,8 +61,25 @@ function Header() {
       setButton(true);
     }
   };
+  const isMounted = useIsMounted();
+
   useEffect(() => {
     showButton();
+    // userids.current.setUserid(userids._id)
+    console.log(isMounted)
+
+    getUser()
+      .then((x) => {
+        console.log(x.user._id)
+        getUserRole(x.user._id)
+          .then((res) => {
+            console.log(res[0]);
+            setRoles(res[0]);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+    
   }, []);
   //console.log(userData);
   window.addEventListener("resize", showButton);
@@ -108,6 +122,16 @@ function Header() {
                     Marketplace
                   </Link>
                 </li>
+                {roles.includes('canTransporter') ? (
+                <li className="nav-item">
+                  <Link
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                    to="/Transport"
+                  >
+                    Transport
+                  </Link>
+                </li>): ('')}
 
                 {/*  {userData.role.permissions.includes("Transporter") && (
                                      <li className='nav-item'>
@@ -117,9 +141,8 @@ function Header() {
                                      </li>
                                 )}   */}
                 {/* Begin Notification Section */}
-                <div className="nav-item" id="notif" onClick={closeMobileMenu}
->
-              {/*     <button onClick={addNotification}>Add notificaiton</button>
+                <div className="nav-item" id="notif" onClick={closeMobileMenu}>
+                  {/*     <button onClick={addNotification}>Add notificaiton</button>
                   <hr /> */}
                   <NotificationCenter />
                   <ToastContainer position="bottom-right" newestOnTop />
@@ -144,25 +167,26 @@ function Header() {
                 </a>
                 <Cart />
               </div>
-              <NavLink
-                className="nav-item"
-                id="addButton"
-                to="/add-product"
-                onClick={closeMobileMenu}
-              >
-                <OverlayTrigger
-                  key="bottom"
-                  placement="bottom"
-                  overlay={
-                    <Tooltip id={`tooltip-bottom`}>
-                      <strong>Add</strong> a sell.
-                    </Tooltip>
-                  }
+{roles.includes('canCreateProduct') ? (
+                <NavLink 
+                  className="nav-item"
+                  id="addButton"
+                  to="/add-product"
+                  onClick={closeMobileMenu}
                 >
-                  <BsFillPlusCircleFill />
-                </OverlayTrigger>
-              </NavLink>
-
+                  <OverlayTrigger
+                    key="bottom"
+                    placement="bottom"
+                    overlay={
+                      <Tooltip id={`tooltip-bottom`}>
+                        <strong>Add</strong> a sell.
+                      </Tooltip>
+                    }
+                  >
+                    <BsFillPlusCircleFill />
+                  </OverlayTrigger>
+                </NavLink>) :('')
+             }
               <NavDropdown
                 title={
                   <img id="navImg" src={userData.avatar} alt="user-avatar" />

@@ -37,5 +37,19 @@ router.get('/offerlist/:id', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        let offers = [];
+        p =  await Offer.find();
+        for (let i = 0; i < p.length; i++) {
+			offers.push(p[i].transform());
+		}
+        res.status(200).json(offers);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
+
+
 
 module.exports = router;

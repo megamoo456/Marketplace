@@ -6,10 +6,10 @@ import { GiAlmond, GiCorn, GiOlive ,GiWheat, GiCoffeeBeans, GiPeanut} from 'reac
 import { TiSortAlphabetically } from 'react-icons/ti';
 
 
-function CategoriesNav() {
+function CategoriesNav({title}) {
     return (
         <div className="container" id="categories">
-            <h1>Categories</h1>
+            <h1>{title}</h1>
             <Link to="/categories/all">
                 <Button variant="dark" id="all"><TiSortAlphabetically />All</Button>{' '}
             </Link>

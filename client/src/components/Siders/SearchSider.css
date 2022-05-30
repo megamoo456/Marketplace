@@ -22,3 +22,27 @@
     background-size: 31px;
     background-position-x: 17px;
 }
+#sider2 {
+    background-image: linear-gradient(204deg, rgb(87 39 14 / 0%), rgb(35 35 23 / 80%)),url('https://res.cloudinary.com/dhwgibwwg/image/upload/v1653041356/transports_ansonmiao_yt3dt2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 299px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 113px;
+}
+
+#sider2 > input {
+    overflow: visible;
+    border-radius: 50px;
+    border: 1px;
+    font-size: 18pt;
+    background-image: url('https://res.cloudinary.com/silenceiv/image/upload/v1616775441/search-icon_i5dy7o.png');
+    background-repeat: no-repeat;
+    height: 55px;
+    padding-left: 68px;
+    background-position: left;
+    background-size: 31px;
+    background-position-x: 17px;
+}

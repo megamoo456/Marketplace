@@ -28,6 +28,25 @@ router.get('/all', async (req, res) => {
     }
 });
 
+router.get('/offertran', async (req, res) => {
+    const { page, search } = req.query;
+    try {
+        let offers;
+        if (search !== '' && search !== undefined) {
+            offers = await Offer.find();
+/*             offers = offers.filter(x => x.title.toLowerCase().includes(search.toLowerCase()) || x.city.toLowerCase().includes(search.toLowerCase())) */            
+            console.log(offers)
+            res.status(200).json({ offers: offers, pages: offers.pages });
+        } else {
+            offers = await Offer.paginate({}, { page: parseInt(page) || 1, limit: 5 });
+            offers.docs = offers.docs.filter(x=> x.adress.shipping == true && x.statue[0] == "Confirmed");
+            res.status(200).json({ offers: offers.docs, pages: offers.pages });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
+
  router.get('/', async (req, res) => {
     const { page, search } = req.query;
     try {
@@ -249,7 +268,7 @@ router.patch('/offerupdate/:offerid/:id', async (req, res) => {
                   }   
             }
 		} */
-        console.log(req.params.offerid)
+        console.log(req.user._id)
         await Offer.findOneAndUpdate(
             {_id : req.params.offerid}, 
             { $set: { "items.$[i].quantity": parseInt(product.quantity),"items.$[i].price": parseInt(product.price) ,"items.$[i].itemTotal": parseInt(total)} },
@@ -258,7 +277,6 @@ router.patch('/offerupdate/:offerid/:id', async (req, res) => {
         let sub = 0 ;   
         p = await Offer.findById(req.params.offerid)
         
-            console.log(p._id)
 			for (let j = 0; j < p.items.length; j++) {
                 console.log(p.items.length)
                 console.log("i m here !!!")
@@ -272,6 +290,20 @@ router.patch('/offerupdate/:offerid/:id', async (req, res) => {
             {$set : {subtotal : sub}},
             {new:true, overwrite:true,upsert:false}
         );
+         if(p.owner.toString()=== req.user._id.toString())
+        await Offer.findOneAndUpdate(
+            {_id : req.params.offerid},
+            {$set : {isCounteredbybuyer: true,isCounteredbyseller: false}},
+            {new:true, overwrite:true,upsert:false}
+        );
+        else
+        await Offer.findOneAndUpdate(
+            {_id : req.params.offerid},
+            {$set : {isCounteredbyseller: true,isCounteredbybuyer: false}},
+            {new:true, overwrite:true,upsert:false}
+        ); 
+
+        console.log(p)
         res.status(200).json({ msg: "offer Updated !" });
            
          

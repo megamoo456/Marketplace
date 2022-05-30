@@ -10,6 +10,7 @@ function Register({ history }) {
     const [alertShow, setAlertShow] = useState(false);
     const [error, setError] = useState(null);
     const [role, setRole] = useState([]);
+    const [roleaff, setRoleaff] = useState([]);
     const [userData, setUserData] = useState({
         name: null,
         lastName: null,
@@ -98,12 +99,24 @@ function Register({ history }) {
                          <Form.Group as={Col} controlId="formGridGender" className="col-lg-4">
                             <Form.Label>Role *</Form.Label>
                             <Form.Control as="select" name="role"  onChange={handleChanges} required >
-                            {role.map(role =>  <option key={role?._id} value={role?._id}>{role.name}</option>  )
+                            {role.map(role =>  <option key={role?._id} value={role?._id} onClick={()=>setRoleaff(role.permissions)}>{role.name}</option>  )
                                 }
                                    
                             </Form.Control>
                         </Form.Group> 
                     </Form.Row>
+{roleaff.includes("canTransporter") ? (
+                    <Form.Row>
+                        <Form.Group className="col-lg-8">
+                            <Form.Label>Phone Number *</Form.Label>
+                            <Form.Control type="text" name="phoneNumber" placeholder="+23055888999" onChange={handleChanges} required />
+                            <Form.Text muted>
+                                Phone Number should be a valid Maurice number.
+                            </Form.Text>
+                        </Form.Group>
+                
+                    </Form.Row>
+             ):("")}
                     <Form.Row>
                         <Form.Group controlId="formBasicEmail" className="col-lg-12">
                             <Form.Label>Email address *</Form.Label>

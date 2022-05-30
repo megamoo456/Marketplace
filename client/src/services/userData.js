@@ -14,6 +14,15 @@ export async function getRoles() {
     return await (await fetch(baseUrl + '/role/all', {credentials: 'include'})).json()
 }
 
+export async function getUserRole(id) {
+    return await (await fetch(`${baseUrl}/role/userrole/${id}`, {credentials: 'include'})).json()
+}
+
+export async function getOwnerParams(id) {
+    return await (await fetch(`${baseUrl}/user/getowner/${id}`, {credentials: 'include'})).json()
+}
+
+
 export async function loginUser(userData) {
     return (await fetch(`/auth/login`, {
         method: 'POST',
