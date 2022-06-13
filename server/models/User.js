@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Product'
         }
     ],
+    createdArticle: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Blog'
+        }
+    ],
     wishedProducts: [
         {
             type: mongoose.Schema.Types.ObjectId,

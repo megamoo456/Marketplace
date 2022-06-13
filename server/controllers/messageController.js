@@ -77,6 +77,20 @@ router.get("/getOfferConversations", async (req, res) => {
   res.status(200).json(checkedOffers);
 });
 
+router.patch("/getNotificationFromOffers", async (req, res) => {
+  const { offers } = req.body;
+  let confirmed = [];
+  let ontheway = [];
+  for (let i=0; i< offers.length ; i++){
+    if (offers[i].offers.statue[0] == "Confirmed")
+        confirmed.push(offers[i].offers)
+    else if (offers[i].offers.statue[0] == "On the way")
+         ontheway.push(offers[i].offers)
+  };
+    
+  res.status(200).json({confirmed,ontheway});
+});
+
 router.post("/sendMessage", async (req, res) => {
   const { chatId, message } = req.body;
   let chat = await ChatRoom.updateOne(

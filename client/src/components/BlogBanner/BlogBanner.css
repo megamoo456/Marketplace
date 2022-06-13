@@ -1,0 +1,122 @@
+#container-banner{
+    background-image: linear-gradient(282deg, rgba(174,213,121,0), rgba(99,144,56,0.8)),url("https://res.cloudinary.com/dhwgibwwg/image/upload/v1654164743/Blog_banner_plghwl.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+}
+#CBlog {
+    max-width: 1401px;
+}
+#addArticle{
+    margin-bottom: -40px;
+    margin-right: -3px;
+    font-size: 23pt;
+}
+
+#container-banner:before {
+    bottom: 65vh;
+    border-radius: 45%;
+    animation-duration: 10s;
+}
+#container-banner:before, #container-banner:after {
+    content: "";
+    position: fixed;
+    left: 50%;
+    min-width: 417vw;
+    min-height: 427vw;
+    background-color: #8fee40d1;
+    animation-name: rotate;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+}
+#container-banner:after {
+    bottom: 58vh;
+    opacity: 0.5;
+    border-radius: 47%;
+    animation-duration: 10s;
+}
+@keyframes rotate {
+    0% {
+        transform: translate(-50%, 0) rotateZ(0deg);
+   }
+    50% {
+        transform: translate(-50%, -2%) rotateZ(180deg);
+   }
+    100% {
+        transform: translate(-50%, 0%) rotateZ(360deg);
+   }
+}
+#blogbanner {
+    height: 537px;
+}
+.popout {
+    font-family: "FestivoLettersNo19";
+    font-weight: 900;
+    font-size: 80px;
+    padding: 80px;
+}
+@keyframes ani {
+    0% {
+        transform: translate3d(0, 0, 0);
+        text-shadow: 0em 0em 0 rgb(193, 230, 173);
+        color: black;
+   }
+    30% {
+        transform: translate3d(0, 0, 0);
+        text-shadow: 0em 0em 0 rgb(193, 230, 173);
+        color: black;
+   }
+    70% {
+        transform: translate3d(0.08em, -0.08em, 0);
+        text-shadow: -0.08em 0.08em rgb(193, 230, 173);
+        color: black;
+   }
+    100% {
+        transform: translate3d(0.08em, -0.08em, 0);
+        text-shadow: -0.08em 0.08em rgb(193, 230, 173);
+        color: black;
+   }
+}
+.popout span {
+    position: relative;
+    display: inline-block;
+    animation: ani 1s infinite alternate cubic-bezier(0.86, 0, 0.07, 1);
+}
+.popout span:nth-last-child(1n) {
+    animation-delay: -0.1666666667s;
+}
+.popout span:nth-last-child(2n) {
+    animation-delay: -0.3333333333s;
+}
+.popout span:nth-last-child(3n) {
+    animation-delay: -0.5s;
+}
+#wave {
+    position: relative;
+    height: 70px;
+    width: 600px;
+    background: #e0efe3;
+  }
+  #wave:before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100% 50%;
+    width: 340px;
+    height: 80px;
+    background-color: white;
+    right: -5px;
+    top: 40px;
+  }
+  #wave:after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100% 50%;
+    width: 300px;
+    height: 70px;
+    background-color: #e0efe3;
+    left: 0;
+    top: 27px;
+  }

@@ -56,13 +56,17 @@ export const RolesCreate = (props) => {
      {id: 'canEditProduct' ,  name: "can-edit-product"},
      {id: 'canDeleteProduct', name: "can-delete-Product"},
      {id: 'canViewProduct', name:   "can-view-Product"},
-     {id: 'canCreateBlog', name:    "can-buy-blog"},
+     {id: 'canCreateBlog', name:    "can-create-blog"},
      {id: 'canMakeOffer', name:     "can-make-offer"},
      {id: 'canTransporter', name:   "can-transporter"},
      {id: 'canCreateRole', name:    "can-create-role"},
      {id: 'canEditRole', name:      "can-edit-role"},
      {id: 'canDeleteRole', name:    "can-delete-role"},
      {id: 'canAffectRole', name:    "can-affect-role"},
+     {id: 'canCreateArticle', name:    "can-create-article"},
+     {id: 'canDeleteArticle', name:    "can-delete-article"},
+     {id: 'canCommentArticle', name:    "can-comment-article"},
+     {id: 'canLikeArticle', name:    "can-like-article"},
      {id: 'canEnterAdmin', name:    "can-enter-admin"}
 ]} />
 {/*       <ReferenceInput source="permission" reference="admin">

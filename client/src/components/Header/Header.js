@@ -122,6 +122,15 @@ function Header() {
                     Marketplace
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                    to="/Blog"
+                  >
+                    Blog
+                  </Link>
+                </li>
                 {roles.includes('canTransporter') ? (
                 <li className="nav-item">
                   <Link
@@ -258,6 +267,7 @@ function Header() {
                     Marketplace
                   </Link>
                 </li>
+                
                 <li className="nav-item">
                   <Link
                     className="nav-links"

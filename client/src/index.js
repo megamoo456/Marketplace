@@ -13,15 +13,15 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   // <React.StrictMode>
   <ContextStore>
-      <CartProvider>
-        <CartopenProvider>
-          <CheckoutProvider>
+    <CartProvider>
+      <CartopenProvider>
+        <CheckoutProvider>
             <BrowserRouter>
               <App />
             </BrowserRouter>
-          </CheckoutProvider>
-        </CartopenProvider>
-      </CartProvider>
+        </CheckoutProvider>
+      </CartopenProvider>
+    </CartProvider>
   </ContextStore>,
   // </React.StrictMode>,
   document.getElementById("root")

@@ -37,6 +37,17 @@ export async function getUserConversations() {
     return (await fetch(`${baseUrl}/messages/getUserConversations`, { credentials: 'include' })).json();
 }
 
+export async function getNotificationFromOffers(offers) {
+    return (await fetch(`${baseUrl}/messages/getNotificationFromOffers`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({offers})
+    })).json();
+}
+
 export async function getOfferConversations() {
     return (await fetch(`${baseUrl}/messages/getOfferConversations`, { credentials: 'include' })).json();
 }
